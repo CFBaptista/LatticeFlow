@@ -1,0 +1,47 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 30,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "windows-default",
+            "displayName": "Windows 64 Debug",
+            "hidden": false,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "architecture": {
+                "value": "x64"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-default",
+            "displayName": "Windows 64 Debug",
+            "hidden": false,
+            "configurePreset": "windows-default",
+            "jobs": 4
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "windows-default",
+            "displayName": "Windows 64 Debug",
+            "hidden": false,
+            "configurePreset": "windows-default",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        }
+    ]
+}
