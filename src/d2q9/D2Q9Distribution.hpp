@@ -13,11 +13,20 @@ class D2Q9Distribution
             return distribution[index];
         }
 
-        int size() const
+
+        constexpr std::size_t dimension() const
         {
-            return distribution.size();
+            return D2Q9Distribution::dimension_;
+        }
+
+        constexpr std::size_t size() const
+        {
+            return D2Q9Distribution::size_;
         }
 
     private:
+        static const std::size_t dimension_ = 2;
+        static const std::size_t size_ = 9;
+        
         std::array<double, 9> distribution;
 };

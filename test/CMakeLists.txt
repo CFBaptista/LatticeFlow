@@ -19,6 +19,10 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
         -Wextra
         -Werror
         -Wpedantic
+        -coverage
+    )
+    target_link_options(LatticeFlowTest PRIVATE
+        -coverage
     )
 endif()
 
