@@ -2,6 +2,7 @@
 #define D2Q9_DISTRIBUTION_HPP
 
 #include <array>
+
 class D2Q9Distribution
 {
 public:

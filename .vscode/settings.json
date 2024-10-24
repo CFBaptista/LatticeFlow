@@ -3,11 +3,7 @@
     "C_Cpp.clang_format_fallbackStyle": "none",
     "C_Cpp.clang_format_style": "file",
     "C_Cpp.intelliSenseEngine": "disabled",
-    "clangd.arguments": [
-        "--clang-tidy",
-        "--completion-style=detailed",
-        "--header-insertion=never"
-    ],
+    "cmake.copyCompileCommands": "${workspaceFolder}/build/compile_commands.json",
     "[cpp]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },

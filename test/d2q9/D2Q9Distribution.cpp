@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "../../src/d2q9/D2Q9Distribution.hpp"
+#include <gtest/gtest.h>
 
 TEST(D2Q9Distribution, DimensionEquals2)
 {
@@ -32,7 +32,7 @@ TEST(D2Q9Distribution, SizeEquals9)
 TEST(D2Q9Distribution, DefaultValueEquals0)
 {
     // Given
-    
+
     D2Q9Distribution distribution;
     const double expectedValue{0.0};
 
@@ -94,7 +94,7 @@ TEST(D2Q9Distribution, NonDefaultDensityEqualsSumOfDistribution)
     distribution[7] = 8.0 / 10.0;
     distribution[8] = 9.0 / 11.0;
     const double expectedDensity{5.9602453102453108};
-    
+
     // When
 
     const double density{distribution.density()};
