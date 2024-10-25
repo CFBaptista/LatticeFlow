@@ -1,10 +1,8 @@
 #ifndef D2Q9_DISTRIBUTION_TPP
 #define D2Q9_DISTRIBUTION_TPP
 
-#ifndef D2Q9_DISTRIBUTION_HPP
-#error __FILE__ should only be included from the corresponding header file
-#endif // D2Q9_DISTRIBUTION_HPP
-
+;
+#include "D2Q9Distribution.hpp"
 #include <limits>
 #include <numeric>
 
