@@ -13,14 +13,24 @@ public:
     static constexpr auto dimension() -> std::size_t;
     static constexpr auto size() -> std::size_t;
 
+    static constexpr std::size_t center{0};
+    static constexpr std::size_t right{1};
+    static constexpr std::size_t top{2};
+    static constexpr std::size_t left{3};
+    static constexpr std::size_t bottom{4};
+    static constexpr std::size_t topRight{5};
+    static constexpr std::size_t topLeft{6};
+    static constexpr std::size_t bottomLeft{7};
+    static constexpr std::size_t bottomRight{8};
+
     auto computeDensity() const -> double;
     auto computeMomentum() const -> std::array<double, 2>;
     static auto computeVelocity(const double& density, const std::array<double, 2>& momentum)
         -> std::array<double, 2>;
 
 private:
-    static const std::size_t dimension_ = 2;
-    static const std::size_t size_ = 9;
+    static constexpr std::size_t dimension_{2};
+    static constexpr std::size_t size_{9};
 
     std::array<double, D2Q9Distribution::size_> distribution_;
 };

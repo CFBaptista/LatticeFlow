@@ -10,7 +10,7 @@ D2Q9Distribution::D2Q9Distribution() : distribution_{0.0} {}
 
 auto D2Q9Distribution::operator[](int index) -> double&
 {
-    return distribution_[index];
+    return distribution_.at(index);
 }
 
 constexpr auto D2Q9Distribution::dimension() -> std::size_t
@@ -31,12 +31,16 @@ auto D2Q9Distribution::computeDensity() const -> double
 
 auto D2Q9Distribution::computeMomentum() const -> std::array<double, 2>
 {
-    std::array<double, 2> momentum;
-
-    momentum[0] = (distribution_[1] + distribution_[5] + distribution_[8]) -
-                  (distribution_[3] + distribution_[6] + distribution_[7]);
-    momentum[1] = (distribution_[2] + distribution_[5] + distribution_[6]) -
-                  (distribution_[4] + distribution_[7] + distribution_[8]);
+    std::array<double, 2> momentum{
+        (distribution_[D2Q9Distribution::right] + distribution_[D2Q9Distribution::topRight] +
+         distribution_[D2Q9Distribution::bottomRight]) -
+            (distribution_[D2Q9Distribution::left] + distribution_[D2Q9Distribution::topLeft] +
+             distribution_[D2Q9Distribution::bottomLeft]),
+        (distribution_[D2Q9Distribution::top] + distribution_[D2Q9Distribution::topRight] +
+         distribution_[D2Q9Distribution::topLeft]) -
+            (distribution_[D2Q9Distribution::bottom] + distribution_[D2Q9Distribution::bottomLeft] +
+             distribution_[D2Q9Distribution::bottomRight])
+    };
 
     return momentum;
 }
@@ -44,10 +48,10 @@ auto D2Q9Distribution::computeMomentum() const -> std::array<double, 2>
 auto D2Q9Distribution::computeVelocity(const double& density, const std::array<double, 2>& momentum)
     -> std::array<double, 2>
 {
-    std::array<double, 2> velocity;
-
-    velocity[0] = momentum[0] / (density + std::numeric_limits<double>::epsilon());
-    velocity[1] = momentum[1] / (density + std::numeric_limits<double>::epsilon());
+    std::array<double, 2> velocity{
+        momentum[0] / (density + std::numeric_limits<double>::epsilon()),
+        momentum[1] / (density + std::numeric_limits<double>::epsilon())
+    };
 
     return velocity;
 }
