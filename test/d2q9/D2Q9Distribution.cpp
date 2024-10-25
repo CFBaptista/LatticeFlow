@@ -34,13 +34,14 @@ TEST(D2Q9Distribution, DefaultValueEquals0)
     // Given
 
     D2Q9Distribution distribution;
+    const int size{9};
     const double expectedValue{0.0};
 
     // When
 
     // Then
 
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < size; i++)
     {
         EXPECT_EQ(distribution[i], expectedValue);
     }
@@ -83,17 +84,14 @@ TEST(D2Q9Distribution, NonDefaultDensityEqualsSumOfDistribution)
 {
     // Given
 
-    D2Q9Distribution distribution;
-    distribution[0] = 1.0 / 3.0;
-    distribution[1] = 2.0 / 4.0;
-    distribution[2] = 3.0 / 5.0;
-    distribution[3] = 4.0 / 6.0;
-    distribution[4] = 5.0 / 7.0;
-    distribution[5] = 6.0 / 8.0;
-    distribution[6] = 7.0 / 9.0;
-    distribution[7] = 8.0 / 10.0;
-    distribution[8] = 9.0 / 11.0;
+    const int size{9};
     const double expectedDensity{5.9602453102453108};
+
+    D2Q9Distribution distribution;
+    for (int i = 0; i < size; i++)
+    {
+        distribution[i] = static_cast<double>(i + 1) / (i + 3);
+    }
 
     // When
 
@@ -124,19 +122,14 @@ TEST(D2Q9Distribution, NonDefaultMomentumEqualsComputedMomentum)
 {
     // Given
 
-    D2Q9Distribution distribution;
-    distribution[0] = 1.0 / 3.0;
-    distribution[1] = 2.0 / 4.0;
-    distribution[2] = 3.0 / 5.0;
-    distribution[3] = 4.0 / 6.0;
-    distribution[4] = 5.0 / 7.0;
-    distribution[5] = 6.0 / 8.0;
-    distribution[6] = 7.0 / 9.0;
-    distribution[7] = 8.0 / 10.0;
-    distribution[8] = 9.0 / 11.0;
-
+    const int size{9};
     const std::array<double, 2> expectedMomentum{-0.17626262626262612, -0.2046897546897548};
 
+    D2Q9Distribution distribution;
+    for (int i = 0; i < size; i++)
+    {
+        distribution[i] = static_cast<double>(i + 1) / (i + 3);
+    }
     // When
 
     const std::array<double, 2> momentum{distribution.computeMomentum()};
@@ -169,16 +162,13 @@ TEST(D2Q9Distribution, NonDefaultVelocityEqualsComputedVelocity)
 {
     // Given
 
+    const int size{9};
+
     D2Q9Distribution distribution;
-    distribution[0] = 1.0 / 3.0;
-    distribution[1] = 2.0 / 4.0;
-    distribution[2] = 3.0 / 5.0;
-    distribution[3] = 4.0 / 6.0;
-    distribution[4] = 5.0 / 7.0;
-    distribution[5] = 6.0 / 8.0;
-    distribution[6] = 7.0 / 9.0;
-    distribution[7] = 8.0 / 10.0;
-    distribution[8] = 9.0 / 11.0;
+    for (int i = 0; i < size; i++)
+    {
+        distribution[i] = static_cast<double>(i + 1) / (i + 3);
+    }
 
     const std::array<double, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
 
