@@ -13,23 +13,23 @@ auto D2Q9Distribution::operator[](int index) -> double&
     return distribution_[index];
 }
 
-constexpr auto D2Q9Distribution::dimension() const -> std::size_t
+constexpr auto D2Q9Distribution::dimension() -> std::size_t
 {
     return D2Q9Distribution::dimension_;
 }
 
-constexpr auto D2Q9Distribution::size() const -> std::size_t
+constexpr auto D2Q9Distribution::size() -> std::size_t
 {
     return D2Q9Distribution::size_;
 }
 
-auto D2Q9Distribution::density() const -> double
+auto D2Q9Distribution::computeDensity() const -> double
 {
     double density{std::reduce(distribution_.begin(), distribution_.end())};
     return density;
 }
 
-auto D2Q9Distribution::momentum() const -> std::array<double, 2>
+auto D2Q9Distribution::computeMomentum() const -> std::array<double, 2>
 {
     std::array<double, 2> momentum;
 
@@ -41,7 +41,7 @@ auto D2Q9Distribution::momentum() const -> std::array<double, 2>
     return momentum;
 }
 
-auto D2Q9Distribution::velocity(const double& density, const std::array<double, 2>& momentum) const
+auto D2Q9Distribution::computeVelocity(const double& density, const std::array<double, 2>& momentum)
     -> std::array<double, 2>
 {
     std::array<double, 2> velocity;

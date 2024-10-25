@@ -72,7 +72,7 @@ TEST(D2Q9Distribution, DefaultDensityEquals0)
 
     // When
 
-    const double density{distribution.density()};
+    const double density{distribution.computeDensity()};
 
     // Then
 
@@ -97,7 +97,7 @@ TEST(D2Q9Distribution, NonDefaultDensityEqualsSumOfDistribution)
 
     // When
 
-    const double density{distribution.density()};
+    const double density{distribution.computeDensity()};
 
     // Then
 
@@ -113,7 +113,7 @@ TEST(D2Q9Distribution, DefaultMomentumEqualsZeroVector)
 
     // When
 
-    const std::array<double, 2> momentum{distribution.momentum()};
+    const std::array<double, 2> momentum{distribution.computeMomentum()};
 
     // Then
 
@@ -139,7 +139,7 @@ TEST(D2Q9Distribution, NonDefaultMomentumEqualsComputedMomentum)
 
     // When
 
-    const std::array<double, 2> momentum{distribution.momentum()};
+    const std::array<double, 2> momentum{distribution.computeMomentum()};
 
     // Then
 
@@ -156,9 +156,9 @@ TEST(D2Q9Distribution, DefaultVelocityEqualsZeroVector)
 
     // When
 
-    const double density{distribution.density()};
-    const std::array<double, 2> momentum{distribution.momentum()};
-    const std::array<double, 2> velocity{distribution.velocity(density, momentum)};
+    const double density{distribution.computeDensity()};
+    const std::array<double, 2> momentum{distribution.computeMomentum()};
+    const std::array<double, 2> velocity{D2Q9Distribution::computeVelocity(density, momentum)};
 
     // Then
 
@@ -184,9 +184,9 @@ TEST(D2Q9Distribution, NonDefaultVelocityEqualsComputedVelocity)
 
     // When
 
-    const double density{distribution.density()};
-    const std::array<double, 2> momentum{distribution.momentum()};
-    const std::array<double, 2> velocity{distribution.velocity(density, momentum)};
+    const double density{distribution.computeDensity()};
+    const std::array<double, 2> momentum{distribution.computeMomentum()};
+    const std::array<double, 2> velocity{D2Q9Distribution::computeVelocity(density, momentum)};
 
     // Then
 

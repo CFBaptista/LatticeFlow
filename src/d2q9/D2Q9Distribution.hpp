@@ -10,12 +10,12 @@ public:
 
     auto operator[](int index) -> double&;
 
-    constexpr auto dimension() const -> std::size_t;
-    constexpr auto size() const -> std::size_t;
+    static constexpr auto dimension() -> std::size_t;
+    static constexpr auto size() -> std::size_t;
 
-    auto density() const -> double;
-    auto momentum() const -> std::array<double, 2>;
-    auto velocity(const double& density, const std::array<double, 2>& momentum) const
+    auto computeDensity() const -> double;
+    auto computeMomentum() const -> std::array<double, 2>;
+    static auto computeVelocity(const double& density, const std::array<double, 2>& momentum)
         -> std::array<double, 2>;
 
 private:
