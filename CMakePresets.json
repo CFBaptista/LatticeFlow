@@ -10,7 +10,7 @@
             "name": "windows-default",
             "displayName": "Windows 64 Debug",
             "hidden": false,
-            "generator": "Ninja",
+            "generator": "MinGW Makefiles",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "architecture": {
                 "value": "x64"
