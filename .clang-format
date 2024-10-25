@@ -3,6 +3,7 @@ AccessModifierOffset: -4
 AlignAfterOpenBracket: BlockIndent
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortFunctionsOnASingleLine: Empty
+AlwaysBreakTemplateDeclarations: true
 BasedOnStyle: LLVM
 BinPackParameters: false
 BreakBeforeBraces: Allman

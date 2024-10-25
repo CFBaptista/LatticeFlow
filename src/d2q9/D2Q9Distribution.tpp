@@ -6,51 +6,62 @@
 #include <limits>
 #include <numeric>
 
-D2Q9Distribution::D2Q9Distribution() : distribution_{0.0} {}
+template <typename Scalar>
+D2Q9Distribution<Scalar>::D2Q9Distribution() : distribution_{0.0}
+{
+}
 
-auto D2Q9Distribution::operator[](int index) -> double&
+template <typename Scalar>
+auto D2Q9Distribution<Scalar>::operator[](int index) -> Scalar&
 {
     return distribution_.at(index);
 }
 
-constexpr auto D2Q9Distribution::dimension() -> std::size_t
+template <typename Scalar>
+constexpr auto D2Q9Distribution<Scalar>::dimension() -> std::size_t
 {
     return D2Q9Distribution::dimension_;
 }
 
-constexpr auto D2Q9Distribution::size() -> std::size_t
+template <typename Scalar>
+constexpr auto D2Q9Distribution<Scalar>::size() -> std::size_t
 {
     return D2Q9Distribution::size_;
 }
 
-auto D2Q9Distribution::computeDensity() const -> double
+template <typename Scalar>
+auto D2Q9Distribution<Scalar>::computeDensity() const -> Scalar
 {
-    double density{std::reduce(distribution_.begin(), distribution_.end())};
+    Scalar density{std::reduce(distribution_.begin(), distribution_.end())};
     return density;
 }
 
-auto D2Q9Distribution::computeMomentum() const -> std::array<double, 2>
+template <typename Scalar>
+auto D2Q9Distribution<Scalar>::computeMomentum() const -> std::array<Scalar, 2>
 {
-    const double momentumX =
+    const Scalar momentumX =
         (distribution_[D2Q9Distribution::right] + distribution_[D2Q9Distribution::topRight] +
          distribution_[D2Q9Distribution::bottomRight]) -
         (distribution_[D2Q9Distribution::left] + distribution_[D2Q9Distribution::topLeft] +
          distribution_[D2Q9Distribution::bottomLeft]);
-    const double momentumY =
+    const Scalar momentumY =
         (distribution_[D2Q9Distribution::top] + distribution_[D2Q9Distribution::topRight] +
          distribution_[D2Q9Distribution::topLeft]) -
         (distribution_[D2Q9Distribution::bottom] + distribution_[D2Q9Distribution::bottomLeft] +
          distribution_[D2Q9Distribution::bottomRight]);
-    std::array<double, 2> momentum{momentumX, momentumY};
+    std::array<Scalar, 2> momentum{momentumX, momentumY};
 
     return momentum;
 }
 
-auto D2Q9Distribution::computeVelocity(const double& density, const std::array<double, 2>& momentum)
-    -> std::array<double, 2>
+template <typename Scalar>
+auto D2Q9Distribution<Scalar>::computeVelocity(
+    const Scalar& density,
+    const std::array<Scalar, 2>& momentum
+) -> std::array<Scalar, 2>
 {
-    const double densityEpsilon = density + std::numeric_limits<double>::epsilon();
-    std::array<double, 2> velocity{momentum[0] / densityEpsilon, momentum[1] / densityEpsilon};
+    const Scalar densityEpsilon = density + std::numeric_limits<Scalar>::epsilon();
+    std::array<Scalar, 2> velocity{momentum[0] / densityEpsilon, momentum[1] / densityEpsilon};
 
     return velocity;
 }
