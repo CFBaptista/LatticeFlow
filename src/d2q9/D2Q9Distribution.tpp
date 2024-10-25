@@ -31,16 +31,17 @@ auto D2Q9Distribution::computeDensity() const -> double
 
 auto D2Q9Distribution::computeMomentum() const -> std::array<double, 2>
 {
-    std::array<double, 2> momentum{
+    const double momentumX =
         (distribution_[D2Q9Distribution::right] + distribution_[D2Q9Distribution::topRight] +
          distribution_[D2Q9Distribution::bottomRight]) -
-            (distribution_[D2Q9Distribution::left] + distribution_[D2Q9Distribution::topLeft] +
-             distribution_[D2Q9Distribution::bottomLeft]),
+        (distribution_[D2Q9Distribution::left] + distribution_[D2Q9Distribution::topLeft] +
+         distribution_[D2Q9Distribution::bottomLeft]);
+    const double momentumY =
         (distribution_[D2Q9Distribution::top] + distribution_[D2Q9Distribution::topRight] +
          distribution_[D2Q9Distribution::topLeft]) -
-            (distribution_[D2Q9Distribution::bottom] + distribution_[D2Q9Distribution::bottomLeft] +
-             distribution_[D2Q9Distribution::bottomRight])
-    };
+        (distribution_[D2Q9Distribution::bottom] + distribution_[D2Q9Distribution::bottomLeft] +
+         distribution_[D2Q9Distribution::bottomRight]);
+    std::array<double, 2> momentum{momentumX, momentumY};
 
     return momentum;
 }
@@ -48,10 +49,8 @@ auto D2Q9Distribution::computeMomentum() const -> std::array<double, 2>
 auto D2Q9Distribution::computeVelocity(const double& density, const std::array<double, 2>& momentum)
     -> std::array<double, 2>
 {
-    std::array<double, 2> velocity{
-        momentum[0] / (density + std::numeric_limits<double>::epsilon()),
-        momentum[1] / (density + std::numeric_limits<double>::epsilon())
-    };
+    const double densityEpsilon = density + std::numeric_limits<double>::epsilon();
+    std::array<double, 2> velocity{momentum[0] / densityEpsilon, momentum[1] / densityEpsilon};
 
     return velocity;
 }
