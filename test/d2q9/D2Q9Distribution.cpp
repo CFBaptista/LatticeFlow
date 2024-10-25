@@ -1,7 +1,24 @@
 #include "../../src/d2q9/D2Q9Distribution.hpp"
 #include <gtest/gtest.h>
 
-TEST(D2Q9Distribution, DimensionEquals2)
+class D2Q9DistributionTest : public ::testing::Test
+{
+public:
+    D2Q9Distribution distribution;
+
+protected:
+    D2Q9DistributionTest()
+    {
+        const int size{9};
+
+        for (int i = 0; i < size; i++)
+        {
+            distribution[i] = static_cast<double>(i + 1) / (i + 3);
+        }
+    }
+};
+
+TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
 {
     // Given
 
@@ -15,7 +32,7 @@ TEST(D2Q9Distribution, DimensionEquals2)
     EXPECT_EQ(distribution.dimension(), expectedDimension);
 }
 
-TEST(D2Q9Distribution, SizeEquals9)
+TEST(DefaultD2Q9DistributionTest, SizeEqualsNine)
 {
     // Given
 
@@ -29,7 +46,7 @@ TEST(D2Q9Distribution, SizeEquals9)
     EXPECT_EQ(distribution.size(), expectedSize);
 }
 
-TEST(D2Q9Distribution, DefaultValueEquals0)
+TEST(DefaultD2Q9DistributionTest, DefaultDistributionEqualsUniformZero)
 {
     // Given
 
@@ -47,24 +64,7 @@ TEST(D2Q9Distribution, DefaultValueEquals0)
     }
 }
 
-TEST(D2Q9Distribution, SetValue)
-{
-    // Given
-
-    D2Q9Distribution distribution;
-    const int index{3};
-    const double expectedValue{3.14};
-
-    // When
-
-    distribution[index] = expectedValue;
-
-    // Then
-
-    EXPECT_EQ(distribution[index], expectedValue);
-}
-
-TEST(D2Q9Distribution, DefaultDensityEquals0)
+TEST(DefaultD2Q9DistributionTest, DefaultDensityEqualsZero)
 {
     // Given
 
@@ -80,29 +80,7 @@ TEST(D2Q9Distribution, DefaultDensityEquals0)
     EXPECT_EQ(density, expectedDensity);
 }
 
-TEST(D2Q9Distribution, NonDefaultDensityEqualsSumOfDistribution)
-{
-    // Given
-
-    const int size{9};
-    const double expectedDensity{5.9602453102453108};
-
-    D2Q9Distribution distribution;
-    for (int i = 0; i < size; i++)
-    {
-        distribution[i] = static_cast<double>(i + 1) / (i + 3);
-    }
-
-    // When
-
-    const double density{distribution.computeDensity()};
-
-    // Then
-
-    EXPECT_NEAR(density, expectedDensity, 1e-15);
-}
-
-TEST(D2Q9Distribution, DefaultMomentumEqualsZeroVector)
+TEST(DefaultD2Q9DistributionTest, DefaultMomentumEqualsZeroVector)
 {
     // Given
 
@@ -118,29 +96,7 @@ TEST(D2Q9Distribution, DefaultMomentumEqualsZeroVector)
     EXPECT_EQ(momentum, expectedMomentum);
 }
 
-TEST(D2Q9Distribution, NonDefaultMomentumEqualsComputedMomentum)
-{
-    // Given
-
-    const int size{9};
-    const std::array<double, 2> expectedMomentum{-0.17626262626262612, -0.2046897546897548};
-
-    D2Q9Distribution distribution;
-    for (int i = 0; i < size; i++)
-    {
-        distribution[i] = static_cast<double>(i + 1) / (i + 3);
-    }
-    // When
-
-    const std::array<double, 2> momentum{distribution.computeMomentum()};
-
-    // Then
-
-    EXPECT_NEAR(momentum[0], expectedMomentum[0], 1e-15);
-    EXPECT_NEAR(momentum[1], expectedMomentum[1], 1e-15);
-}
-
-TEST(D2Q9Distribution, DefaultVelocityEqualsZeroVector)
+TEST(DefaultD2Q9DistributionTest, DefaultVelocityEqualsZeroVector)
 {
     // Given
 
@@ -158,24 +114,66 @@ TEST(D2Q9Distribution, DefaultVelocityEqualsZeroVector)
     EXPECT_EQ(velocity, expectedVelocity);
 }
 
-TEST(D2Q9Distribution, NonDefaultVelocityEqualsComputedVelocity)
+TEST_F(D2Q9DistributionTest, NonUniformDistributionEqualsSetValues)
 {
     // Given
 
     const int size{9};
+    const std::array<double, size> expectedValue{1.0 / 3.0, 2.0 / 4.0,  3.0 / 5.0,
+                                                 4.0 / 6.0, 5.0 / 7.0,  6.0 / 8.0,
+                                                 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0};
 
-    D2Q9Distribution distribution;
+    // When
+
+    // Then
+
     for (int i = 0; i < size; i++)
     {
-        distribution[i] = static_cast<double>(i + 1) / (i + 3);
+        EXPECT_EQ(distribution[i], expectedValue.at(i));
     }
+}
 
-    const std::array<double, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
+TEST_F(D2Q9DistributionTest, NonDefaultDensityEqualsDistributionZerothMoment)
+{
+    // Given
+
+    const double expectedDensity{5.9602453102453108};
 
     // When
 
     const double density{distribution.computeDensity()};
+
+    // Then
+
+    EXPECT_NEAR(density, expectedDensity, 1e-15);
+}
+
+TEST_F(D2Q9DistributionTest, NonDefaultMomentumEqualsDistributionFirstMoment)
+{
+    // Given
+
+    const std::array<double, 2> expectedMomentum{-0.17626262626262612, -0.2046897546897548};
+
+    // When
+
     const std::array<double, 2> momentum{distribution.computeMomentum()};
+
+    // Then
+
+    EXPECT_NEAR(momentum[0], expectedMomentum[0], 1e-15);
+    EXPECT_NEAR(momentum[1], expectedMomentum[1], 1e-15);
+}
+
+TEST_F(D2Q9DistributionTest, NonDefaultVelocityEqualsDistributionFirstMomentDividedbyZerothMoment)
+{
+    // Given
+
+    const double density{distribution.computeDensity()};
+    const std::array<double, 2> momentum{distribution.computeMomentum()};
+    const std::array<double, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
+
+    // When
+
     const std::array<double, 2> velocity{D2Q9Distribution::computeVelocity(density, momentum)};
 
     // Then
