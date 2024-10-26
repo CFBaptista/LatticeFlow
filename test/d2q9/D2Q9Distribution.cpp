@@ -19,8 +19,8 @@ protected:
     }
 };
 
-using MyTypes = ::testing::Types<double>; // Add more types if needed
-TYPED_TEST_SUITE(D2Q9DistributionTest, MyTypes);
+using FloatingPointTypes = ::testing::Types<float, double>; // Add more types if needed
+TYPED_TEST_SUITE(D2Q9DistributionTest, FloatingPointTypes);
 
 TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
 {
@@ -125,9 +125,9 @@ TYPED_TEST(D2Q9DistributionTest, NonUniformDistributionEqualsSetValues)
     // Given
 
     const int size{9};
-    const std::array<double, size> expectedValue{1.0 / 3.0, 2.0 / 4.0,  3.0 / 5.0,
-                                                 4.0 / 6.0, 5.0 / 7.0,  6.0 / 8.0,
-                                                 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0};
+    const std::array<TypeParam, size> expectedValue{1.0 / 3.0, 2.0 / 4.0,  3.0 / 5.0,
+                                                    4.0 / 6.0, 5.0 / 7.0,  6.0 / 8.0,
+                                                    7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0};
 
     // When
 
@@ -143,31 +143,33 @@ TYPED_TEST(D2Q9DistributionTest, NonDefaultDensityEqualsDistributionZerothMoment
 {
     // Given
 
-    const double expectedDensity{5.9602453102453108};
+    const TypeParam expectedDensity{5.9602453102453108};
+    const double tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
 
     // When
 
-    const double density{this->distribution.computeDensity()};
+    const TypeParam density{this->distribution.computeDensity()};
 
     // Then
 
-    EXPECT_NEAR(density, expectedDensity, 1e-15);
+    EXPECT_NEAR(density, expectedDensity, tolerance);
 }
 
 TYPED_TEST(D2Q9DistributionTest, NonDefaultMomentumEqualsDistributionFirstMoment)
 {
     // Given
 
-    const std::array<double, 2> expectedMomentum{-0.17626262626262612, -0.2046897546897548};
+    const std::array<TypeParam, 2> expectedMomentum{-0.17626262626262612, -0.2046897546897548};
+    const TypeParam tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
 
     // When
 
-    const std::array<double, 2> momentum{this->distribution.computeMomentum()};
+    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
 
     // Then
 
-    EXPECT_NEAR(momentum[0], expectedMomentum[0], 1e-15);
-    EXPECT_NEAR(momentum[1], expectedMomentum[1], 1e-15);
+    EXPECT_NEAR(momentum[0], expectedMomentum[0], tolerance);
+    EXPECT_NEAR(momentum[1], expectedMomentum[1], tolerance);
 }
 
 TYPED_TEST(
@@ -177,18 +179,19 @@ TYPED_TEST(
 {
     // Given
 
-    const double density{this->distribution.computeDensity()};
-    const std::array<double, 2> momentum{this->distribution.computeMomentum()};
-    const std::array<double, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
+    const TypeParam density{this->distribution.computeDensity()};
+    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
+    const std::array<TypeParam, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
+    const TypeParam tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
 
     // When
 
-    const std::array<double, 2> velocity{
-        D2Q9Distribution<double>::computeVelocity(density, momentum)
+    const std::array<TypeParam, 2> velocity{
+        D2Q9Distribution<TypeParam>::computeVelocity(density, momentum)
     };
 
     // Then
 
-    EXPECT_NEAR(velocity[0], expectedVelocity[0], 1e-15);
-    EXPECT_NEAR(velocity[1], expectedVelocity[1], 1e-15);
+    EXPECT_NEAR(velocity[0], expectedVelocity[0], tolerance);
+    EXPECT_NEAR(velocity[1], expectedVelocity[1], tolerance);
 }
