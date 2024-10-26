@@ -2,6 +2,16 @@
 #include <gtest/gtest.h>
 
 template <typename Scalar>
+class DefaultD2Q9DistributionTest : public ::testing::Test
+{
+public:
+    D2Q9Distribution<Scalar> distribution;
+
+protected:
+    DefaultD2Q9DistributionTest() = default;
+};
+
+template <typename Scalar>
 class D2Q9DistributionTest : public ::testing::Test
 {
 public:
@@ -19,14 +29,15 @@ protected:
     }
 };
 
-using FloatingPointTypes = ::testing::Types<float, double>; // Add more types if needed
+using FloatingPointTypes = ::testing::Types<float, double>;
+TYPED_TEST_SUITE(DefaultD2Q9DistributionTest, FloatingPointTypes);
 TYPED_TEST_SUITE(D2Q9DistributionTest, FloatingPointTypes);
 
-TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
+TYPED_TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
 {
     // Given
 
-    D2Q9Distribution<double> distribution;
+    D2Q9Distribution<TypeParam> distribution;
     const int expectedDimension{2};
 
     // When
@@ -36,11 +47,11 @@ TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
     EXPECT_EQ(distribution.dimension(), expectedDimension);
 }
 
-TEST(DefaultD2Q9DistributionTest, SizeEqualsNine)
+TYPED_TEST(DefaultD2Q9DistributionTest, SizeEqualsNine)
 {
     // Given
 
-    D2Q9Distribution<double> distribution;
+    D2Q9Distribution<TypeParam> distribution;
     const int expectedSize{9};
 
     // When
@@ -50,13 +61,13 @@ TEST(DefaultD2Q9DistributionTest, SizeEqualsNine)
     EXPECT_EQ(distribution.size(), expectedSize);
 }
 
-TEST(DefaultD2Q9DistributionTest, DefaultDistributionEqualsUniformZero)
+TYPED_TEST(DefaultD2Q9DistributionTest, DefaultDistributionEqualsUniformZero)
 {
     // Given
 
-    D2Q9Distribution<double> distribution;
+    D2Q9Distribution<TypeParam> distribution;
     const int size{9};
-    const double expectedValue{0.0};
+    const TypeParam expectedValue{0.0};
 
     // When
 
@@ -68,51 +79,51 @@ TEST(DefaultD2Q9DistributionTest, DefaultDistributionEqualsUniformZero)
     }
 }
 
-TEST(DefaultD2Q9DistributionTest, DefaultDensityEqualsZero)
+TYPED_TEST(DefaultD2Q9DistributionTest, DefaultDensityEqualsZero)
 {
     // Given
 
-    D2Q9Distribution<double> distribution;
-    const double expectedDensity{0.0};
+    D2Q9Distribution<TypeParam> distribution;
+    const TypeParam expectedDensity{0.0};
 
     // When
 
-    const double density{distribution.computeDensity()};
+    const TypeParam density{distribution.computeDensity()};
 
     // Then
 
     EXPECT_EQ(density, expectedDensity);
 }
 
-TEST(DefaultD2Q9DistributionTest, DefaultMomentumEqualsZeroVector)
+TYPED_TEST(DefaultD2Q9DistributionTest, DefaultMomentumEqualsZeroVector)
 {
     // Given
 
-    D2Q9Distribution<double> distribution;
-    const std::array<double, 2> expectedMomentum{0.0, 0.0};
+    D2Q9Distribution<TypeParam> distribution;
+    const std::array<TypeParam, 2> expectedMomentum{0.0, 0.0};
 
     // When
 
-    const std::array<double, 2> momentum{distribution.computeMomentum()};
+    const std::array<TypeParam, 2> momentum{distribution.computeMomentum()};
 
     // Then
 
     EXPECT_EQ(momentum, expectedMomentum);
 }
 
-TEST(DefaultD2Q9DistributionTest, DefaultVelocityEqualsZeroVector)
+TYPED_TEST(DefaultD2Q9DistributionTest, DefaultVelocityEqualsZeroVector)
 {
     // Given
 
-    D2Q9Distribution<double> distribution;
-    const std::array<double, 2> expectedVelocity{0.0, 0.0};
+    D2Q9Distribution<TypeParam> distribution;
+    const std::array<TypeParam, 2> expectedVelocity{0.0, 0.0};
 
     // When
 
-    const double density{distribution.computeDensity()};
-    const std::array<double, 2> momentum{distribution.computeMomentum()};
-    const std::array<double, 2> velocity{
-        D2Q9Distribution<double>::computeVelocity(density, momentum)
+    const TypeParam density{distribution.computeDensity()};
+    const std::array<TypeParam, 2> momentum{distribution.computeMomentum()};
+    const std::array<TypeParam, 2> velocity{
+        D2Q9Distribution<TypeParam>::computeVelocity(density, momentum)
     };
 
     // Then
