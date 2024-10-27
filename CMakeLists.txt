@@ -19,6 +19,9 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(ENABLE_TESTING ON)
 endif()
 
+# Enable export of compile commands
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Add test root directory
 if (ENABLE_TESTING)
     include(CTest)
