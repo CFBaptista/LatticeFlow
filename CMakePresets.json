@@ -26,8 +26,7 @@
             "name": "windows-default",
             "displayName": "Windows 64 Debug",
             "hidden": false,
-            "configurePreset": "windows-default",
-            "jobs": 4
+            "configurePreset": "windows-default"
         }
     ],
     "testPresets": [
