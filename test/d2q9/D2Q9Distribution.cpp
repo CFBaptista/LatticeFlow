@@ -1,6 +1,8 @@
 #include "../../src/d2q9/D2Q9Distribution.hpp"
 #include <gtest/gtest.h>
 
+using FloatingPointTypes = ::testing::Types<float, double>;
+
 template <typename Scalar>
 class DefaultD2Q9DistributionTest : public ::testing::Test
 {
@@ -11,27 +13,7 @@ protected:
     DefaultD2Q9DistributionTest() = default;
 };
 
-template <typename Scalar>
-class D2Q9DistributionTest : public ::testing::Test
-{
-public:
-    D2Q9Distribution<Scalar> distribution;
-
-protected:
-    D2Q9DistributionTest()
-    {
-        const int size{9};
-
-        for (int i = 0; i < size; i++)
-        {
-            distribution[i] = static_cast<Scalar>(i + 1) / (i + 3);
-        }
-    }
-};
-
-using FloatingPointTypes = ::testing::Types<float, double>;
 TYPED_TEST_SUITE(DefaultD2Q9DistributionTest, FloatingPointTypes);
-TYPED_TEST_SUITE(D2Q9DistributionTest, FloatingPointTypes);
 
 TYPED_TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
 {
@@ -61,7 +43,7 @@ TYPED_TEST(DefaultD2Q9DistributionTest, SizeEqualsNine)
     EXPECT_EQ(distribution.size(), expectedSize);
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, DefaultDistributionEqualsUniformZero)
+TYPED_TEST(DefaultD2Q9DistributionTest, DistributionEqualsUniformZero)
 {
     // Given
 
@@ -79,7 +61,7 @@ TYPED_TEST(DefaultD2Q9DistributionTest, DefaultDistributionEqualsUniformZero)
     }
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, DefaultDensityEqualsZero)
+TYPED_TEST(DefaultD2Q9DistributionTest, DensityEqualsZero)
 {
     // Given
 
@@ -95,7 +77,7 @@ TYPED_TEST(DefaultD2Q9DistributionTest, DefaultDensityEqualsZero)
     EXPECT_EQ(density, expectedDensity);
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, DefaultMomentumEqualsZeroVector)
+TYPED_TEST(DefaultD2Q9DistributionTest, MomentumEqualsZeroVector)
 {
     // Given
 
@@ -111,7 +93,7 @@ TYPED_TEST(DefaultD2Q9DistributionTest, DefaultMomentumEqualsZeroVector)
     EXPECT_EQ(momentum, expectedMomentum);
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, DefaultVelocityEqualsZeroVector)
+TYPED_TEST(DefaultD2Q9DistributionTest, VelocityEqualsZeroVector)
 {
     // Given
 
@@ -131,7 +113,27 @@ TYPED_TEST(DefaultD2Q9DistributionTest, DefaultVelocityEqualsZeroVector)
     EXPECT_EQ(velocity, expectedVelocity);
 }
 
-TYPED_TEST(D2Q9DistributionTest, NonUniformDistributionEqualsSetValues)
+template <typename Scalar>
+class GeneralD2Q9DistributionTest : public ::testing::Test
+{
+public:
+    D2Q9Distribution<Scalar> distribution;
+
+protected:
+    GeneralD2Q9DistributionTest()
+    {
+        const int size{9};
+
+        for (int i = 0; i < size; i++)
+        {
+            distribution[i] = static_cast<Scalar>(i + 1) / (i + 3);
+        }
+    }
+};
+
+TYPED_TEST_SUITE(GeneralD2Q9DistributionTest, FloatingPointTypes);
+
+TYPED_TEST(GeneralD2Q9DistributionTest, DistributionEqualsSetValues)
 {
     // Given
 
@@ -150,7 +152,7 @@ TYPED_TEST(D2Q9DistributionTest, NonUniformDistributionEqualsSetValues)
     }
 }
 
-TYPED_TEST(D2Q9DistributionTest, NonDefaultDensityEqualsDistributionZerothMoment)
+TYPED_TEST(GeneralD2Q9DistributionTest, DensityEqualsDistributionZerothMoment)
 {
     // Given
 
@@ -166,7 +168,7 @@ TYPED_TEST(D2Q9DistributionTest, NonDefaultDensityEqualsDistributionZerothMoment
     EXPECT_NEAR(density, expectedDensity, tolerance);
 }
 
-TYPED_TEST(D2Q9DistributionTest, NonDefaultMomentumEqualsDistributionFirstMoment)
+TYPED_TEST(GeneralD2Q9DistributionTest, MomentumEqualsDistributionFirstMoment)
 {
     // Given
 
@@ -183,10 +185,7 @@ TYPED_TEST(D2Q9DistributionTest, NonDefaultMomentumEqualsDistributionFirstMoment
     EXPECT_NEAR(momentum[1], expectedMomentum[1], tolerance);
 }
 
-TYPED_TEST(
-    D2Q9DistributionTest,
-    NonDefaultVelocityEqualsDistributionFirstMomentDividedbyZerothMoment
-)
+TYPED_TEST(GeneralD2Q9DistributionTest, VelocityEqualsDistributionFirstMomentDividedbyZerothMoment)
 {
     // Given
 
