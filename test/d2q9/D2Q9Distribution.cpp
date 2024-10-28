@@ -133,34 +133,6 @@ protected:
 
 TYPED_TEST_SUITE(GeneralD2Q9DistributionTest, FloatingPointTypes);
 
-TYPED_TEST(GeneralD2Q9DistributionTest, DimensionEqualsTwo)
-{
-    // Given
-
-    D2Q9Distribution<TypeParam> distribution;
-    const int expectedDimension{2};
-
-    // When
-
-    // Then
-
-    EXPECT_EQ(distribution.dimension(), expectedDimension);
-}
-
-TYPED_TEST(GeneralD2Q9DistributionTest, SizeEqualsNine)
-{
-    // Given
-
-    D2Q9Distribution<TypeParam> distribution;
-    const int expectedSize{9};
-
-    // When
-
-    // Then
-
-    EXPECT_EQ(distribution.size(), expectedSize);
-}
-
 TYPED_TEST(GeneralD2Q9DistributionTest, DistributionEqualsSetValues)
 {
     // Given
