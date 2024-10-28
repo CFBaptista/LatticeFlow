@@ -6,37 +6,37 @@
 #include <limits>
 #include <numeric>
 
-template <typename Scalar>
+template <std::floating_point Scalar>
 D2Q9Distribution<Scalar>::D2Q9Distribution() : distribution_{0.0}
 {
 }
 
-template <typename Scalar>
+template <std::floating_point Scalar>
 auto D2Q9Distribution<Scalar>::operator[](int index) -> Scalar&
 {
     return distribution_.at(index);
 }
 
-template <typename Scalar>
+template <std::floating_point Scalar>
 constexpr auto D2Q9Distribution<Scalar>::dimension() -> std::size_t
 {
     return D2Q9Distribution::dimension_;
 }
 
-template <typename Scalar>
+template <std::floating_point Scalar>
 constexpr auto D2Q9Distribution<Scalar>::size() -> std::size_t
 {
     return D2Q9Distribution::size_;
 }
 
-template <typename Scalar>
+template <std::floating_point Scalar>
 auto D2Q9Distribution<Scalar>::computeDensity() const -> Scalar
 {
     Scalar density{std::reduce(distribution_.begin(), distribution_.end())};
     return density;
 }
 
-template <typename Scalar>
+template <std::floating_point Scalar>
 auto D2Q9Distribution<Scalar>::computeMomentum() const -> std::array<Scalar, 2>
 {
     const Scalar momentumX =
@@ -54,7 +54,7 @@ auto D2Q9Distribution<Scalar>::computeMomentum() const -> std::array<Scalar, 2>
     return momentum;
 }
 
-template <typename Scalar>
+template <std::floating_point Scalar>
 auto D2Q9Distribution<Scalar>::computeVelocity(
     const Scalar& density,
     const std::array<Scalar, 2>& momentum
