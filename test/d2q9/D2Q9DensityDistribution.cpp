@@ -1,4 +1,5 @@
 #include "../../src/d2q9/D2Q9DensityDistribution.hpp"
+#include "../../src/d2q9/arithmetic.hpp"
 #include <gtest/gtest.h>
 
 using FloatingPointTypes = ::testing::Types<float, double>;
@@ -239,4 +240,31 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, WeightsEqualLiteratureValues)
     EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(6), expectedWeightTopLeft);
     EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(7), expectedWeightBottomLeft);
     EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(8), expectedWeightBottomRight);
+}
+
+TEST(D2Q9DensityDistributionArithmeticTest, AddingTwoDistributionsReturnsSumOfDistribution)
+{
+    // Given
+
+    D2Q9DensityDistribution<double> distribution1;
+    D2Q9DensityDistribution<double> distribution2;
+    D2Q9DensityDistribution<double> expectedDistribution;
+
+    for (int i = 0; i < static_cast<int>(D2Q9DensityDistribution<double>::size()); i++)
+    {
+        distribution1[i] = i;
+        distribution2[i] = 2 * i;
+        expectedDistribution[i] = 3 * i;
+    }
+
+    // When
+
+    D2Q9DensityDistribution<double> summedDistribution = distribution1 + distribution2;
+
+    // Then
+
+    for (size_t i = 0; i < D2Q9DensityDistribution<double>::size(); i++)
+    {
+        EXPECT_EQ(summedDistribution[i], expectedDistribution[i]);
+    }
 }
