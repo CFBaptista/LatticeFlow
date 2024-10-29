@@ -14,13 +14,13 @@ public:
 
     static constexpr auto dimension() -> std::size_t;
     static constexpr auto size() -> std::size_t;
-
     static auto weight(int index) -> Scalar;
+
+    static auto computeVelocity(const Scalar& density, const std::array<Scalar, 2>& momentum)
+        -> std::array<Scalar, 2>;
 
     auto computeDensity() const -> Scalar;
     auto computeMomentum() const -> std::array<Scalar, 2>;
-    static auto computeVelocity(const Scalar& density, const std::array<Scalar, 2>& momentum)
-        -> std::array<Scalar, 2>;
 
 private:
     static constexpr std::size_t dimension_{2};

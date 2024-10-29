@@ -31,6 +31,25 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, DistributionEqualsUniformZero)
     }
 }
 
+TYPED_TEST(DefaultD2Q9DensityDistributionTest, VelocityEqualsZeroVector)
+{
+    // Given
+
+    const std::array<TypeParam, 2> expectedVelocity{0.0, 0.0};
+
+    // When
+
+    const TypeParam density{this->distribution.computeDensity()};
+    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
+    const std::array<TypeParam, 2> velocity{
+        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
+    };
+
+    // Then
+
+    EXPECT_EQ(velocity, expectedVelocity);
+}
+
 TYPED_TEST(DefaultD2Q9DensityDistributionTest, DensityEqualsZero)
 {
     // Given
@@ -59,25 +78,6 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, MomentumEqualsZeroVector)
     // Then
 
     EXPECT_EQ(momentum, expectedMomentum);
-}
-
-TYPED_TEST(DefaultD2Q9DensityDistributionTest, VelocityEqualsZeroVector)
-{
-    // Given
-
-    const std::array<TypeParam, 2> expectedVelocity{0.0, 0.0};
-
-    // When
-
-    const TypeParam density{this->distribution.computeDensity()};
-    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
-    const std::array<TypeParam, 2> velocity{
-        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
-    };
-
-    // Then
-
-    EXPECT_EQ(velocity, expectedVelocity);
 }
 
 template <typename Scalar>
@@ -145,6 +145,30 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, DistributionEqualsSetValues)
     }
 }
 
+TYPED_TEST(
+    GeneralD2Q9DensityDistributionTest,
+    VelocityEqualsDistributionFirstMomentDividedbyZerothMoment
+)
+{
+    // Given
+
+    const TypeParam density{this->distribution.computeDensity()};
+    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
+    const std::array<TypeParam, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
+    const TypeParam tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
+
+    // When
+
+    const std::array<TypeParam, 2> velocity{
+        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
+    };
+
+    // Then
+
+    EXPECT_NEAR(velocity[0], expectedVelocity[0], tolerance);
+    EXPECT_NEAR(velocity[1], expectedVelocity[1], tolerance);
+}
+
 TYPED_TEST(GeneralD2Q9DensityDistributionTest, DensityEqualsDistributionZerothMoment)
 {
     // Given
@@ -176,30 +200,6 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, MomentumEqualsDistributionFirstMo
 
     EXPECT_NEAR(momentum[0], expectedMomentum[0], tolerance);
     EXPECT_NEAR(momentum[1], expectedMomentum[1], tolerance);
-}
-
-TYPED_TEST(
-    GeneralD2Q9DensityDistributionTest,
-    VelocityEqualsDistributionFirstMomentDividedbyZerothMoment
-)
-{
-    // Given
-
-    const TypeParam density{this->distribution.computeDensity()};
-    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
-    const std::array<TypeParam, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
-    const TypeParam tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
-
-    // When
-
-    const std::array<TypeParam, 2> velocity{
-        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
-    };
-
-    // Then
-
-    EXPECT_NEAR(velocity[0], expectedVelocity[0], tolerance);
-    EXPECT_NEAR(velocity[1], expectedVelocity[1], tolerance);
 }
 
 TYPED_TEST(GeneralD2Q9DensityDistributionTest, WeightsEqualLiteratureValues)
