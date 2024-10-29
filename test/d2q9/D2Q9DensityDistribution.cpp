@@ -15,32 +15,6 @@ protected:
 
 TYPED_TEST_SUITE(DefaultD2Q9DensityDistributionTest, FloatingPointTypes);
 
-TYPED_TEST(DefaultD2Q9DensityDistributionTest, DimensionEqualsTwo)
-{
-    // Given
-
-    const int expectedDimension{2};
-
-    // When
-
-    // Then
-
-    EXPECT_EQ(this->distribution.dimension(), expectedDimension);
-}
-
-TYPED_TEST(DefaultD2Q9DensityDistributionTest, SizeEqualsNine)
-{
-    // Given
-
-    const int expectedSize{9};
-
-    // When
-
-    // Then
-
-    EXPECT_EQ(this->distribution.size(), expectedSize);
-}
-
 TYPED_TEST(DefaultD2Q9DensityDistributionTest, DistributionEqualsUniformZero)
 {
     // Given
@@ -125,6 +99,32 @@ protected:
 };
 
 TYPED_TEST_SUITE(GeneralD2Q9DensityDistributionTest, FloatingPointTypes);
+
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, DimensionEqualsTwo)
+{
+    // Given
+
+    const int expectedDimension{2};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(this->distribution.dimension(), expectedDimension);
+}
+
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, SizeEqualsNine)
+{
+    // Given
+
+    const int expectedSize{9};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(this->distribution.size(), expectedSize);
+}
 
 TYPED_TEST(GeneralD2Q9DensityDistributionTest, DistributionEqualsSetValues)
 {
