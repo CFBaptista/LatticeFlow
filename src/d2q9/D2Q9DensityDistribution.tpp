@@ -30,7 +30,7 @@ constexpr auto D2Q9DensityDistribution<Scalar>::size() -> std::size_t
 }
 
 template <std::floating_point Scalar>
-auto D2Q9DensityDistribution<Scalar>::weight(int index) -> Scalar
+auto D2Q9DensityDistribution<Scalar>::weight(int index) -> const Scalar&
 {
     return D2Q9DensityDistribution::weight_.at(index);
 }
