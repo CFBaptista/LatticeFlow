@@ -201,3 +201,42 @@ TYPED_TEST(
     EXPECT_NEAR(velocity[0], expectedVelocity[0], tolerance);
     EXPECT_NEAR(velocity[1], expectedVelocity[1], tolerance);
 }
+
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, WeightsEqualLiteratureValues)
+{
+    //  @book{
+    //      author = {Krüger, Timm and Kusumaatmaja, Halim and Kuzmin, Alexandr and Shardt, Orest
+    //      and Silva, Goncalo and Viggen, Erlend Magnus},
+    //      title = {The Lattice Boltzmann Method},
+    //      year = {2017},
+    //      publisher = {Springer},
+    //      isbn = {978-3-319-83103-9},
+    //      doi = {10.1007/978-3-319-44649-3}
+    //  }
+
+    // Given
+
+    const TypeParam expectedWeightCenter{4.0 / 9.0};
+    const TypeParam expectedWeightRight{1.0 / 9.0};
+    const TypeParam expectedWeightTop{1.0 / 9.0};
+    const TypeParam expectedWeightLeft{1.0 / 9.0};
+    const TypeParam expectedWeightBottom{1.0 / 9.0};
+    const TypeParam expectedWeightTopRight{1.0 / 36.0};
+    const TypeParam expectedWeightTopLeft{1.0 / 36.0};
+    const TypeParam expectedWeightBottomLeft{1.0 / 36.0};
+    const TypeParam expectedWeightBottomRight{1.0 / 36.0};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(0), expectedWeightCenter);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(1), expectedWeightRight);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(2), expectedWeightTop);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(3), expectedWeightLeft);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(4), expectedWeightBottom);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(5), expectedWeightTopRight);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(6), expectedWeightTopLeft);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(7), expectedWeightBottomLeft);
+    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(8), expectedWeightBottomRight);
+}
