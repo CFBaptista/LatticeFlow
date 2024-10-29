@@ -1,25 +1,25 @@
-#include "../../src/d2q9/D2Q9Distribution.hpp"
+#include "../../src/d2q9/D2Q9DensityDistribution.hpp"
 #include <gtest/gtest.h>
 
 using FloatingPointTypes = ::testing::Types<float, double>;
 
 template <typename Scalar>
-class DefaultD2Q9DistributionTest : public ::testing::Test
+class DefaultD2Q9DensityDistributionTest : public ::testing::Test
 {
 public:
-    D2Q9Distribution<Scalar> distribution;
+    D2Q9DensityDistribution<Scalar> distribution;
 
 protected:
-    DefaultD2Q9DistributionTest() = default;
+    DefaultD2Q9DensityDistributionTest() = default;
 };
 
-TYPED_TEST_SUITE(DefaultD2Q9DistributionTest, FloatingPointTypes);
+TYPED_TEST_SUITE(DefaultD2Q9DensityDistributionTest, FloatingPointTypes);
 
-TYPED_TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
+TYPED_TEST(DefaultD2Q9DensityDistributionTest, DimensionEqualsTwo)
 {
     // Given
 
-    D2Q9Distribution<TypeParam> distribution;
+    D2Q9DensityDistribution<TypeParam> distribution;
     const int expectedDimension{2};
 
     // When
@@ -29,11 +29,11 @@ TYPED_TEST(DefaultD2Q9DistributionTest, DimensionEqualsTwo)
     EXPECT_EQ(distribution.dimension(), expectedDimension);
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, SizeEqualsNine)
+TYPED_TEST(DefaultD2Q9DensityDistributionTest, SizeEqualsNine)
 {
     // Given
 
-    D2Q9Distribution<TypeParam> distribution;
+    D2Q9DensityDistribution<TypeParam> distribution;
     const int expectedSize{9};
 
     // When
@@ -43,11 +43,11 @@ TYPED_TEST(DefaultD2Q9DistributionTest, SizeEqualsNine)
     EXPECT_EQ(distribution.size(), expectedSize);
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, DistributionEqualsUniformZero)
+TYPED_TEST(DefaultD2Q9DensityDistributionTest, DistributionEqualsUniformZero)
 {
     // Given
 
-    D2Q9Distribution<TypeParam> distribution;
+    D2Q9DensityDistribution<TypeParam> distribution;
     const int size{9};
     const TypeParam expectedValue{0.0};
 
@@ -61,11 +61,11 @@ TYPED_TEST(DefaultD2Q9DistributionTest, DistributionEqualsUniformZero)
     }
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, DensityEqualsZero)
+TYPED_TEST(DefaultD2Q9DensityDistributionTest, DensityEqualsZero)
 {
     // Given
 
-    D2Q9Distribution<TypeParam> distribution;
+    D2Q9DensityDistribution<TypeParam> distribution;
     const TypeParam expectedDensity{0.0};
 
     // When
@@ -77,11 +77,11 @@ TYPED_TEST(DefaultD2Q9DistributionTest, DensityEqualsZero)
     EXPECT_EQ(density, expectedDensity);
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, MomentumEqualsZeroVector)
+TYPED_TEST(DefaultD2Q9DensityDistributionTest, MomentumEqualsZeroVector)
 {
     // Given
 
-    D2Q9Distribution<TypeParam> distribution;
+    D2Q9DensityDistribution<TypeParam> distribution;
     const std::array<TypeParam, 2> expectedMomentum{0.0, 0.0};
 
     // When
@@ -93,11 +93,11 @@ TYPED_TEST(DefaultD2Q9DistributionTest, MomentumEqualsZeroVector)
     EXPECT_EQ(momentum, expectedMomentum);
 }
 
-TYPED_TEST(DefaultD2Q9DistributionTest, VelocityEqualsZeroVector)
+TYPED_TEST(DefaultD2Q9DensityDistributionTest, VelocityEqualsZeroVector)
 {
     // Given
 
-    D2Q9Distribution<TypeParam> distribution;
+    D2Q9DensityDistribution<TypeParam> distribution;
     const std::array<TypeParam, 2> expectedVelocity{0.0, 0.0};
 
     // When
@@ -105,7 +105,7 @@ TYPED_TEST(DefaultD2Q9DistributionTest, VelocityEqualsZeroVector)
     const TypeParam density{distribution.computeDensity()};
     const std::array<TypeParam, 2> momentum{distribution.computeMomentum()};
     const std::array<TypeParam, 2> velocity{
-        D2Q9Distribution<TypeParam>::computeVelocity(density, momentum)
+        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
     };
 
     // Then
@@ -114,13 +114,13 @@ TYPED_TEST(DefaultD2Q9DistributionTest, VelocityEqualsZeroVector)
 }
 
 template <typename Scalar>
-class GeneralD2Q9DistributionTest : public ::testing::Test
+class GeneralD2Q9DensityDistributionTest : public ::testing::Test
 {
 public:
-    D2Q9Distribution<Scalar> distribution;
+    D2Q9DensityDistribution<Scalar> distribution;
 
 protected:
-    GeneralD2Q9DistributionTest()
+    GeneralD2Q9DensityDistributionTest()
     {
         const int size{9};
 
@@ -131,9 +131,9 @@ protected:
     }
 };
 
-TYPED_TEST_SUITE(GeneralD2Q9DistributionTest, FloatingPointTypes);
+TYPED_TEST_SUITE(GeneralD2Q9DensityDistributionTest, FloatingPointTypes);
 
-TYPED_TEST(GeneralD2Q9DistributionTest, DistributionEqualsSetValues)
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, DistributionEqualsSetValues)
 {
     // Given
 
@@ -152,7 +152,7 @@ TYPED_TEST(GeneralD2Q9DistributionTest, DistributionEqualsSetValues)
     }
 }
 
-TYPED_TEST(GeneralD2Q9DistributionTest, DensityEqualsDistributionZerothMoment)
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, DensityEqualsDistributionZerothMoment)
 {
     // Given
 
@@ -168,7 +168,7 @@ TYPED_TEST(GeneralD2Q9DistributionTest, DensityEqualsDistributionZerothMoment)
     EXPECT_NEAR(density, expectedDensity, tolerance);
 }
 
-TYPED_TEST(GeneralD2Q9DistributionTest, MomentumEqualsDistributionFirstMoment)
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, MomentumEqualsDistributionFirstMoment)
 {
     // Given
 
@@ -185,7 +185,10 @@ TYPED_TEST(GeneralD2Q9DistributionTest, MomentumEqualsDistributionFirstMoment)
     EXPECT_NEAR(momentum[1], expectedMomentum[1], tolerance);
 }
 
-TYPED_TEST(GeneralD2Q9DistributionTest, VelocityEqualsDistributionFirstMomentDividedbyZerothMoment)
+TYPED_TEST(
+    GeneralD2Q9DensityDistributionTest,
+    VelocityEqualsDistributionFirstMomentDividedbyZerothMoment
+)
 {
     // Given
 
@@ -197,7 +200,7 @@ TYPED_TEST(GeneralD2Q9DistributionTest, VelocityEqualsDistributionFirstMomentDiv
     // When
 
     const std::array<TypeParam, 2> velocity{
-        D2Q9Distribution<TypeParam>::computeVelocity(density, momentum)
+        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
     };
 
     // Then
