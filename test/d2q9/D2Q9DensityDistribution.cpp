@@ -19,45 +19,41 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, DimensionEqualsTwo)
 {
     // Given
 
-    D2Q9DensityDistribution<TypeParam> distribution;
     const int expectedDimension{2};
 
     // When
 
     // Then
 
-    EXPECT_EQ(distribution.dimension(), expectedDimension);
+    EXPECT_EQ(this->distribution.dimension(), expectedDimension);
 }
 
 TYPED_TEST(DefaultD2Q9DensityDistributionTest, SizeEqualsNine)
 {
     // Given
 
-    D2Q9DensityDistribution<TypeParam> distribution;
     const int expectedSize{9};
 
     // When
 
     // Then
 
-    EXPECT_EQ(distribution.size(), expectedSize);
+    EXPECT_EQ(this->distribution.size(), expectedSize);
 }
 
 TYPED_TEST(DefaultD2Q9DensityDistributionTest, DistributionEqualsUniformZero)
 {
     // Given
 
-    D2Q9DensityDistribution<TypeParam> distribution;
-    const int size{9};
     const TypeParam expectedValue{0.0};
 
     // When
 
     // Then
 
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < this->distribution.size(); i++)
     {
-        EXPECT_EQ(distribution[i], expectedValue);
+        EXPECT_EQ(this->distribution[i], expectedValue);
     }
 }
 
@@ -65,12 +61,11 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, DensityEqualsZero)
 {
     // Given
 
-    D2Q9DensityDistribution<TypeParam> distribution;
     const TypeParam expectedDensity{0.0};
 
     // When
 
-    const TypeParam density{distribution.computeDensity()};
+    const TypeParam density{this->distribution.computeDensity()};
 
     // Then
 
@@ -81,12 +76,11 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, MomentumEqualsZeroVector)
 {
     // Given
 
-    D2Q9DensityDistribution<TypeParam> distribution;
     const std::array<TypeParam, 2> expectedMomentum{0.0, 0.0};
 
     // When
 
-    const std::array<TypeParam, 2> momentum{distribution.computeMomentum()};
+    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
 
     // Then
 
@@ -97,13 +91,12 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, VelocityEqualsZeroVector)
 {
     // Given
 
-    D2Q9DensityDistribution<TypeParam> distribution;
     const std::array<TypeParam, 2> expectedVelocity{0.0, 0.0};
 
     // When
 
-    const TypeParam density{distribution.computeDensity()};
-    const std::array<TypeParam, 2> momentum{distribution.computeMomentum()};
+    const TypeParam density{this->distribution.computeDensity()};
+    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
     const std::array<TypeParam, 2> velocity{
         D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
     };
