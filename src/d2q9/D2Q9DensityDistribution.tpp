@@ -12,6 +12,12 @@ D2Q9DensityDistribution<Scalar>::D2Q9DensityDistribution() : distribution_{0.0}
 }
 
 template <std::floating_point Scalar>
+D2Q9DensityDistribution<Scalar>::D2Q9DensityDistribution(std::initializer_list<Scalar> distribution)
+{
+    std::copy(distribution.begin(), distribution.end(), distribution_.begin());
+}
+
+template <std::floating_point Scalar>
 auto D2Q9DensityDistribution<Scalar>::operator[](int index) -> Scalar&
 {
     return distribution_.at(index);

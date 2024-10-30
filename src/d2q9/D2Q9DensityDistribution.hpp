@@ -9,6 +9,7 @@ class D2Q9DensityDistribution
 {
 public:
     D2Q9DensityDistribution();
+    D2Q9DensityDistribution(std::initializer_list<Scalar> distribution);
 
     auto operator[](int index) -> Scalar&;
     auto operator[](int index) const -> const Scalar&;
