@@ -5,16 +5,9 @@ TEST(D2Q9DensityDistributionArithmeticTest, AddingTwoDistributionsReturnsSumOfDi
 {
     // Given
 
-    D2Q9DensityDistribution<double> distribution1;
-    D2Q9DensityDistribution<double> distribution2;
-    D2Q9DensityDistribution<double> expectedDistribution;
-
-    for (int i = 0; i < static_cast<int>(D2Q9DensityDistribution<double>::size()); i++)
-    {
-        distribution1[i] = i;
-        distribution2[i] = 2 * i;
-        expectedDistribution[i] = 3 * i;
-    }
+    const D2Q9DensityDistribution<double> distribution1{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    const D2Q9DensityDistribution<double> distribution2{2, 4, 6, 8, 10, 12, 14, 16, 18};
+    const D2Q9DensityDistribution<double> expectedDistribution{3, 6, 9, 12, 15, 18, 21, 24, 27};
 
     // When
 
