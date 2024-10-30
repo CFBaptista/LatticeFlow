@@ -2,7 +2,7 @@
 #define ARITHMETIC_TPP
 
 ;
-#include "D2Q9DensityDistribution.hpp"
+#include "arithmetic.hpp"
 
 template <std::floating_point Scalar>
 auto operator+(
