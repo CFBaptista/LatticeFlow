@@ -18,13 +18,13 @@ D2Q9DensityDistribution<Scalar>::D2Q9DensityDistribution(std::initializer_list<S
 }
 
 template <std::floating_point Scalar>
-auto D2Q9DensityDistribution<Scalar>::operator[](int index) -> Scalar&
+auto D2Q9DensityDistribution<Scalar>::operator[](std::size_t index) -> Scalar&
 {
     return distribution_.at(index);
 }
 
 template <std::floating_point Scalar>
-auto D2Q9DensityDistribution<Scalar>::operator[](int index) const -> const Scalar&
+auto D2Q9DensityDistribution<Scalar>::operator[](std::size_t index) const -> const Scalar&
 {
     return distribution_.at(index);
 }
@@ -42,7 +42,7 @@ constexpr auto D2Q9DensityDistribution<Scalar>::size() -> std::size_t
 }
 
 template <std::floating_point Scalar>
-auto D2Q9DensityDistribution<Scalar>::weight(int index) -> const Scalar&
+auto D2Q9DensityDistribution<Scalar>::weight(std::size_t index) -> const Scalar&
 {
     return D2Q9DensityDistribution::weight_.at(index);
 }

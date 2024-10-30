@@ -11,12 +11,12 @@ public:
     D2Q9DensityDistribution();
     D2Q9DensityDistribution(std::initializer_list<Scalar> distribution);
 
-    auto operator[](int index) -> Scalar&;
-    auto operator[](int index) const -> const Scalar&;
+    auto operator[](std::size_t index) -> Scalar&;
+    auto operator[](std::size_t index) const -> const Scalar&;
 
     static constexpr auto dimension() -> std::size_t;
     static constexpr auto size() -> std::size_t;
-    static auto weight(int index) -> const Scalar&;
+    static auto weight(std::size_t index) -> const Scalar&;
 
     static auto computeVelocity(const Scalar& density, const std::array<Scalar, 2>& momentum)
         -> std::array<Scalar, 2>;
