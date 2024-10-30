@@ -89,9 +89,7 @@ public:
 protected:
     GeneralD2Q9DensityDistributionTest()
     {
-        const std::size_t size{9};
-
-        for (std::size_t i = 0; i < size; i++)
+        for (std::size_t i = 0; i < D2Q9DensityDistribution<Scalar>::size(); i++)
         {
             distribution[i] = static_cast<Scalar>(i + 1) / (i + 3);
         }
