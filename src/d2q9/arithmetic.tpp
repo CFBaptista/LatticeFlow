@@ -5,8 +5,10 @@
 #include "D2Q9DensityDistribution.hpp"
 
 template <std::floating_point Scalar>
-auto operator+(D2Q9DensityDistribution<Scalar>& lhs, D2Q9DensityDistribution<Scalar>& rhs)
-    -> D2Q9DensityDistribution<Scalar>
+auto operator+(
+    const D2Q9DensityDistribution<Scalar>& lhs,
+    const D2Q9DensityDistribution<Scalar>& rhs
+) -> D2Q9DensityDistribution<Scalar>
 {
     D2Q9DensityDistribution<Scalar> result;
 

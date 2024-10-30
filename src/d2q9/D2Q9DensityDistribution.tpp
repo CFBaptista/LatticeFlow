@@ -18,6 +18,12 @@ auto D2Q9DensityDistribution<Scalar>::operator[](int index) -> Scalar&
 }
 
 template <std::floating_point Scalar>
+auto D2Q9DensityDistribution<Scalar>::operator[](int index) const -> const Scalar&
+{
+    return distribution_.at(index);
+}
+
+template <std::floating_point Scalar>
 constexpr auto D2Q9DensityDistribution<Scalar>::dimension() -> std::size_t
 {
     return D2Q9DensityDistribution::dimension_;

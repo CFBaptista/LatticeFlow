@@ -11,6 +11,7 @@ public:
     D2Q9DensityDistribution();
 
     auto operator[](int index) -> Scalar&;
+    auto operator[](int index) const -> const Scalar&;
 
     static constexpr auto dimension() -> std::size_t;
     static constexpr auto size() -> std::size_t;
