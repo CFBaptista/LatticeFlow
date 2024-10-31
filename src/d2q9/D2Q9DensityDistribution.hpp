@@ -28,22 +28,21 @@ private:
     static constexpr std::size_t dimension_{2};
     static constexpr std::size_t size_{9};
 
-    static constexpr std::size_t center{0};
-    static constexpr std::size_t right{1};
-    static constexpr std::size_t top{2};
-    static constexpr std::size_t left{3};
-    static constexpr std::size_t bottom{4};
-    static constexpr std::size_t topRight{5};
-    static constexpr std::size_t topLeft{6};
-    static constexpr std::size_t bottomLeft{7};
-    static constexpr std::size_t bottomRight{8};
+    static constexpr std::size_t center_{0};
+    static constexpr std::size_t right_{1};
+    static constexpr std::size_t top_{2};
+    static constexpr std::size_t left_{3};
+    static constexpr std::size_t bottom_{4};
+    static constexpr std::size_t topRight_{5};
+    static constexpr std::size_t topLeft_{6};
+    static constexpr std::size_t bottomLeft_{7};
+    static constexpr std::size_t bottomRight_{8};
 
-    static constexpr std::array<Scalar, D2Q9DensityDistribution<Scalar>::size_> weight_{
-        4.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0, 1.0 / 9.0,
-        1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0
-    };
+    static constexpr std::array<Scalar, size_> weight_{4.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0,
+                                                       1.0 / 9.0,  1.0 / 9.0,  1.0 / 36.0,
+                                                       1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0};
 
-    std::array<Scalar, D2Q9DensityDistribution<Scalar>::size_> distribution_;
+    std::array<Scalar, size_> distribution_;
 };
 
 #include "D2Q9DensityDistribution.tpp"

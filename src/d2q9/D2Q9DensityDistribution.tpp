@@ -69,18 +69,12 @@ auto D2Q9DensityDistribution<Scalar>::computeDensity() const -> Scalar
 template <std::floating_point Scalar>
 auto D2Q9DensityDistribution<Scalar>::computeMomentum() const -> std::array<Scalar, 2>
 {
-    const Scalar momentumX = (distribution_[D2Q9DensityDistribution::right] +
-                              distribution_[D2Q9DensityDistribution::topRight] +
-                              distribution_[D2Q9DensityDistribution::bottomRight]) -
-                             (distribution_[D2Q9DensityDistribution::left] +
-                              distribution_[D2Q9DensityDistribution::topLeft] +
-                              distribution_[D2Q9DensityDistribution::bottomLeft]);
-    const Scalar momentumY = (distribution_[D2Q9DensityDistribution::top] +
-                              distribution_[D2Q9DensityDistribution::topRight] +
-                              distribution_[D2Q9DensityDistribution::topLeft]) -
-                             (distribution_[D2Q9DensityDistribution::bottom] +
-                              distribution_[D2Q9DensityDistribution::bottomLeft] +
-                              distribution_[D2Q9DensityDistribution::bottomRight]);
+    const Scalar momentumX =
+        (distribution_[right_] + distribution_[topRight_] + distribution_[bottomRight_]) -
+        (distribution_[left_] + distribution_[topLeft_] + distribution_[bottomLeft_]);
+    const Scalar momentumY =
+        (distribution_[top_] + distribution_[topRight_] + distribution_[topLeft_]) -
+        (distribution_[bottom_] + distribution_[bottomLeft_] + distribution_[bottomRight_]);
     std::array<Scalar, 2> momentum{momentumX, momentumY};
 
     return momentum;
