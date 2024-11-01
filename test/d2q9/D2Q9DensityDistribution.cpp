@@ -6,11 +6,10 @@ using FloatingPointTypes = ::testing::Types<float, double>;
 template <typename Scalar>
 class DefaultD2Q9DensityDistributionTest : public ::testing::Test
 {
-public:
-    D2Q9DensityDistribution<Scalar> distribution;
-
 protected:
     DefaultD2Q9DensityDistributionTest() = default;
+
+    D2Q9DensityDistribution<Scalar> distribution;
 };
 
 TYPED_TEST_SUITE(DefaultD2Q9DensityDistributionTest, FloatingPointTypes);
@@ -83,9 +82,6 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, MomentumEqualsZeroVector)
 template <typename Scalar>
 class GeneralD2Q9DensityDistributionTest : public ::testing::Test
 {
-public:
-    D2Q9DensityDistribution<Scalar> distribution;
-
 protected:
     GeneralD2Q9DensityDistributionTest()
     {
@@ -94,6 +90,8 @@ protected:
             distribution[i] = static_cast<Scalar>(i + 1) / (i + 3);
         }
     }
+
+    D2Q9DensityDistribution<Scalar> distribution;
 };
 
 TYPED_TEST_SUITE(GeneralD2Q9DensityDistributionTest, FloatingPointTypes);
