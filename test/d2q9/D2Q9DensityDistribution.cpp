@@ -85,7 +85,7 @@ class GeneralD2Q9DensityDistributionTest : public ::testing::Test
 protected:
     GeneralD2Q9DensityDistributionTest()
     {
-        for (std::size_t i = 0; i < D2Q9DensityDistribution<Scalar>::size(); ++i)
+        for (std::size_t i = 0; i < distribution.size(); ++i)
         {
             distribution[i] = static_cast<Scalar>(i + 1) / (i + 3);
         }

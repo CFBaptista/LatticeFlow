@@ -30,13 +30,13 @@ auto D2Q9DensityDistribution<Scalar>::operator[](std::size_t index) const -> con
 }
 
 template <std::floating_point Scalar>
-constexpr auto D2Q9DensityDistribution<Scalar>::dimension() -> std::size_t
+constexpr auto D2Q9DensityDistribution<Scalar>::dimension() const -> std::size_t
 {
     return D2Q9DensityDistribution::dimension_;
 }
 
 template <std::floating_point Scalar>
-constexpr auto D2Q9DensityDistribution<Scalar>::size() -> std::size_t
+constexpr auto D2Q9DensityDistribution<Scalar>::size() const -> std::size_t
 {
     return D2Q9DensityDistribution::size_;
 }
@@ -50,11 +50,11 @@ auto D2Q9DensityDistribution<Scalar>::weight(std::size_t index) -> const Scalar&
 template <std::floating_point Scalar>
 auto D2Q9DensityDistribution<Scalar>::computeVelocity(
     const Scalar& density,
-    const std::array<Scalar, dimension()>& momentum
-) -> std::array<Scalar, dimension()>
+    const std::array<Scalar, dimension_>& momentum
+) -> std::array<Scalar, dimension_>
 {
     const Scalar densityEpsilon = density + std::numeric_limits<Scalar>::epsilon();
-    const std::array<Scalar, dimension()> velocity{
+    const std::array<Scalar, dimension_> velocity{
         momentum[0] / densityEpsilon, momentum[1] / densityEpsilon
     };
 
@@ -69,7 +69,7 @@ auto D2Q9DensityDistribution<Scalar>::computeDensity() const -> Scalar
 }
 
 template <std::floating_point Scalar>
-auto D2Q9DensityDistribution<Scalar>::computeMomentum() const -> std::array<Scalar, dimension()>
+auto D2Q9DensityDistribution<Scalar>::computeMomentum() const -> std::array<Scalar, dimension_>
 {
     const Scalar momentumX =
         (distribution_[right_] + distribution_[topRight_] + distribution_[bottomRight_]) -

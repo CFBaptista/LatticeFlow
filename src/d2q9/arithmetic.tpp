@@ -12,7 +12,7 @@ auto operator+(
 {
     D2Q9DensityDistribution<Scalar> result;
 
-    for (std::size_t i = 0; i < D2Q9DensityDistribution<Scalar>::size(); ++i)
+    for (std::size_t i = 0; i < result.size(); ++i)
     {
         result[i] = lhs[i] + rhs[i];
     }
@@ -28,7 +28,7 @@ auto operator-(
 {
     D2Q9DensityDistribution<Scalar> result;
 
-    for (std::size_t i = 0; i < D2Q9DensityDistribution<Scalar>::size(); ++i)
+    for (std::size_t i = 0; i < result.size(); ++i)
     {
         result[i] = lhs[i] - rhs[i];
     }

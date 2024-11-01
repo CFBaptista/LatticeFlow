@@ -23,12 +23,12 @@ TYPED_TEST(D2Q9DensityDistributionArithmeticTest, AddingTwoDistributionsReturnsS
 
     // When
 
-    D2Q9DensityDistribution<TypeParam> summedDistribution =
+    const D2Q9DensityDistribution<TypeParam> summedDistribution =
         this->distribution1 + this->distribution2;
 
     // Then
 
-    for (std::size_t i = 0; i < D2Q9DensityDistribution<TypeParam>::size(); ++i)
+    for (std::size_t i = 0; i < expectedDistribution.size(); ++i)
     {
         EXPECT_EQ(summedDistribution[i], expectedDistribution[i]);
     }
@@ -46,12 +46,12 @@ TYPED_TEST(
 
     // When
 
-    D2Q9DensityDistribution<TypeParam> summedDistribution =
+    const D2Q9DensityDistribution<TypeParam> summedDistribution =
         this->distribution1 - this->distribution2;
 
     // Then
 
-    for (std::size_t i = 0; i < D2Q9DensityDistribution<TypeParam>::size(); ++i)
+    for (std::size_t i = 0; i < expectedDistribution.size(); ++i)
     {
         EXPECT_EQ(summedDistribution[i], expectedDistribution[i]);
     }
