@@ -25,7 +25,7 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, DistributionEqualsUniformZero)
 
     // Then
 
-    for (std::size_t i = 0; i < this->distribution.size(); i++)
+    for (std::size_t i = 0; i < this->distribution.size(); ++i)
     {
         EXPECT_EQ(this->distribution[i], expectedValue);
     }
@@ -89,7 +89,7 @@ public:
 protected:
     GeneralD2Q9DensityDistributionTest()
     {
-        for (std::size_t i = 0; i < D2Q9DensityDistribution<Scalar>::size(); i++)
+        for (std::size_t i = 0; i < D2Q9DensityDistribution<Scalar>::size(); ++i)
         {
             distribution[i] = static_cast<Scalar>(i + 1) / (i + 3);
         }
@@ -137,7 +137,7 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, DistributionEqualsSetValues)
 
     // Then
 
-    for (std::size_t i = 0; i < size; i++)
+    for (std::size_t i = 0; i < size; ++i)
     {
         EXPECT_EQ(this->distribution[i], expectedValue.at(i));
     }

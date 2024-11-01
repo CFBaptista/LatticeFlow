@@ -18,11 +18,12 @@ public:
     static constexpr auto size() -> std::size_t;
     static auto weight(std::size_t index) -> const Scalar&;
 
-    static auto computeVelocity(const Scalar& density, const std::array<Scalar, 2>& momentum)
-        -> std::array<Scalar, 2>;
+    static auto
+    computeVelocity(const Scalar& density, const std::array<Scalar, dimension()>& momentum)
+        -> std::array<Scalar, dimension()>;
 
     auto computeDensity() const -> Scalar;
-    auto computeMomentum() const -> std::array<Scalar, 2>;
+    auto computeMomentum() const -> std::array<Scalar, dimension()>;
 
 private:
     static constexpr std::size_t dimension_{2};
@@ -38,11 +39,11 @@ private:
     static constexpr std::size_t bottomLeft_{7};
     static constexpr std::size_t bottomRight_{8};
 
-    static constexpr std::array<Scalar, size_> weight_{4.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0,
-                                                       1.0 / 9.0,  1.0 / 9.0,  1.0 / 36.0,
-                                                       1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0};
+    static constexpr std::array<Scalar, size()> weight_{4.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0,
+                                                        1.0 / 9.0,  1.0 / 9.0,  1.0 / 36.0,
+                                                        1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0};
 
-    std::array<Scalar, size_> distribution_;
+    std::array<Scalar, size()> distribution_;
 };
 
 #include "D2Q9DensityDistribution.tpp"

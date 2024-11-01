@@ -15,7 +15,7 @@ TEST(D2Q9DensityDistributionArithmeticTest, AddingTwoDistributionsReturnsSumOfDi
 
     // Then
 
-    for (std::size_t i = 0; i < D2Q9DensityDistribution<double>::size(); i++)
+    for (std::size_t i = 0; i < D2Q9DensityDistribution<double>::size(); ++i)
     {
         EXPECT_EQ(summedDistribution[i], expectedDistribution[i]);
     }
