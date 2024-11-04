@@ -122,6 +122,55 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, SizeEqualsNine)
     EXPECT_EQ(this->distribution.size(), expectedSize);
 }
 
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, GetValueFromNonConstDistribution)
+{
+    // Given
+
+    const std::size_t index{3};
+    const TypeParam expectedValue{4.0 / 6.0};
+
+    // When
+
+    const TypeParam& value{this->distribution[index]};
+
+    // Then
+
+    EXPECT_EQ(value, expectedValue);
+}
+
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, GetValueFromConstDistribution)
+{
+    // Given
+
+    const D2Q9DensityDistribution<TypeParam> distribution{3, 5, 7, 11, 13, 17, 19, 23, 29};
+    const std::size_t index{3};
+    const TypeParam expectedValue{11};
+
+    // When
+
+    const TypeParam& value{distribution[index]};
+
+    // Then
+
+    EXPECT_EQ(value, expectedValue);
+}
+
+TYPED_TEST(GeneralD2Q9DensityDistributionTest, SetValueInNonConstDistribution)
+{
+    // Given
+
+    const std::size_t index{3};
+    const TypeParam expectedValue{5.0};
+
+    // When
+
+    this->distribution[index] = expectedValue;
+
+    // Then
+
+    EXPECT_EQ(this->distribution[index], expectedValue);
+}
+
 TYPED_TEST(GeneralD2Q9DensityDistributionTest, DistributionEqualsSetValues)
 {
     // Given
@@ -200,6 +249,8 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, MomentumEqualsDistributionFirstMo
 
 TYPED_TEST(GeneralD2Q9DensityDistributionTest, WeightsEqualLiteratureValues)
 {
+    // Reference:
+    //
     //  @book{
     //      author = {Krüger, Timm and Kusumaatmaja, Halim and Kuzmin, Alexandr and Shardt, Orest
     //      and Silva, Goncalo and Viggen, Erlend Magnus},
