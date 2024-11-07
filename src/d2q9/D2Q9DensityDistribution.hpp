@@ -4,13 +4,9 @@
 #include <array>
 #include <concepts>
 
-template <std::floating_point Scalar>
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 class D2Q9DensityDistribution
 {
-private:
-    static constexpr std::size_t dimension_{2};
-    static constexpr std::size_t size_{9};
-
 public:
     D2Q9DensityDistribution();
     D2Q9DensityDistribution(std::initializer_list<Scalar> distribution);
@@ -23,11 +19,11 @@ public:
     static auto weight(std::size_t index) -> const Scalar&;
 
     static auto
-    computeVelocity(const Scalar& density, const std::array<Scalar, dimension_>& momentum)
-        -> std::array<Scalar, dimension_>;
+    computeVelocity(const Scalar& density, const std::array<Scalar, Dimension>& momentum)
+        -> std::array<Scalar, Dimension>;
 
     auto computeDensity() const -> Scalar;
-    auto computeMomentum() const -> std::array<Scalar, dimension_>;
+    auto computeMomentum() const -> std::array<Scalar, Dimension>;
 
 private:
     static constexpr std::size_t center_{0};
@@ -40,11 +36,11 @@ private:
     static constexpr std::size_t bottomLeft_{7};
     static constexpr std::size_t bottomRight_{8};
 
-    static constexpr std::array<Scalar, size_> weight_{4.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0,
-                                                       1.0 / 9.0,  1.0 / 9.0,  1.0 / 36.0,
-                                                       1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0};
+    static constexpr std::array<Scalar, Size> weight_{4.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0,
+                                                      1.0 / 9.0,  1.0 / 9.0,  1.0 / 36.0,
+                                                      1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0};
 
-    std::array<Scalar, size_> distribution_;
+    std::array<Scalar, Size> distribution_;
 };
 
 #include "D2Q9DensityDistribution.tpp"

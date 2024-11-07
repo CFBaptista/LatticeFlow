@@ -3,17 +3,17 @@
 
 #include "D2Q9DensityDistribution.hpp"
 
-template <std::floating_point Scalar>
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto operator+(
-    const D2Q9DensityDistribution<Scalar>& lhs,
-    const D2Q9DensityDistribution<Scalar>& rhs
-) -> D2Q9DensityDistribution<Scalar>;
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& lhs,
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& rhs
+) -> D2Q9DensityDistribution<Dimension, Size, Scalar>;
 
-template <std::floating_point Scalar>
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto operator-(
-    const D2Q9DensityDistribution<Scalar>& lhs,
-    const D2Q9DensityDistribution<Scalar>& rhs
-) -> D2Q9DensityDistribution<Scalar>;
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& lhs,
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& rhs
+) -> D2Q9DensityDistribution<Dimension, Size, Scalar>;
 
 #include "arithmetic.tpp"
 

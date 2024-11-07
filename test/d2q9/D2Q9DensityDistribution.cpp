@@ -9,7 +9,10 @@ class DefaultD2Q9DensityDistributionTest : public ::testing::Test
 protected:
     DefaultD2Q9DensityDistributionTest() = default;
 
-    D2Q9DensityDistribution<Scalar> distribution;
+    static constexpr std::size_t dimension_{2};
+    static constexpr std::size_t size_{9};
+
+    D2Q9DensityDistribution<dimension_, size_, Scalar> distribution;
 };
 
 TYPED_TEST_SUITE(DefaultD2Q9DensityDistributionTest, FloatingPointTypes);
@@ -41,7 +44,7 @@ TYPED_TEST(DefaultD2Q9DensityDistributionTest, VelocityEqualsZeroVector)
     const TypeParam density{this->distribution.computeDensity()};
     const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
     const std::array<TypeParam, 2> velocity{
-        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
+        D2Q9DensityDistribution<2, 9, TypeParam>::computeVelocity(density, momentum)
     };
 
     // Then
@@ -91,7 +94,7 @@ protected:
         }
     }
 
-    D2Q9DensityDistribution<Scalar> distribution;
+    D2Q9DensityDistribution<2, 9, Scalar> distribution;
 };
 
 TYPED_TEST_SUITE(GeneralD2Q9DensityDistributionTest, FloatingPointTypes);
@@ -142,7 +145,7 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, GetValueFromConstDistribution)
 {
     // Given
 
-    const D2Q9DensityDistribution<TypeParam> distribution{3, 5, 7, 11, 13, 17, 19, 23, 29};
+    const D2Q9DensityDistribution<2, 9, TypeParam> distribution{3, 5, 7, 11, 13, 17, 19, 23, 29};
     const std::size_t index{3};
     const TypeParam expectedValue{11};
 
@@ -205,7 +208,7 @@ TYPED_TEST(
     // When
 
     const std::array<TypeParam, 2> velocity{
-        D2Q9DensityDistribution<TypeParam>::computeVelocity(density, momentum)
+        D2Q9DensityDistribution<2, 9, TypeParam>::computeVelocity(density, momentum)
     };
 
     // Then
@@ -250,7 +253,7 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, MomentumEqualsDistributionFirstMo
 TYPED_TEST(GeneralD2Q9DensityDistributionTest, WeightsEqualLiteratureValues)
 {
     // Reference:
-    //
+
     //  @book{
     //      author = {Krüger, Timm and Kusumaatmaja, Halim and Kuzmin, Alexandr and Shardt, Orest
     //      and Silva, Goncalo and Viggen, Erlend Magnus},
@@ -277,13 +280,15 @@ TYPED_TEST(GeneralD2Q9DensityDistributionTest, WeightsEqualLiteratureValues)
 
     // Then
 
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(0), expectedWeightCenter);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(1), expectedWeightRight);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(2), expectedWeightTop);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(3), expectedWeightLeft);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(4), expectedWeightBottom);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(5), expectedWeightTopRight);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(6), expectedWeightTopLeft);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(7), expectedWeightBottomLeft);
-    EXPECT_EQ(D2Q9DensityDistribution<TypeParam>::weight(8), expectedWeightBottomRight);
+    using Type = D2Q9DensityDistribution<2, 9, TypeParam>;
+
+    EXPECT_EQ(Type::weight(0), expectedWeightCenter);
+    EXPECT_EQ(Type::weight(1), expectedWeightRight);
+    EXPECT_EQ(Type::weight(2), expectedWeightTop);
+    EXPECT_EQ(Type::weight(3), expectedWeightLeft);
+    EXPECT_EQ(Type::weight(4), expectedWeightBottom);
+    EXPECT_EQ(Type::weight(5), expectedWeightTopRight);
+    EXPECT_EQ(Type::weight(6), expectedWeightTopLeft);
+    EXPECT_EQ(Type::weight(7), expectedWeightBottomLeft);
+    EXPECT_EQ(Type::weight(8), expectedWeightBottomRight);
 }

@@ -4,13 +4,13 @@
 ;
 #include "arithmetic.hpp"
 
-template <std::floating_point Scalar>
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto operator+(
-    const D2Q9DensityDistribution<Scalar>& lhs,
-    const D2Q9DensityDistribution<Scalar>& rhs
-) -> D2Q9DensityDistribution<Scalar>
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& lhs,
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& rhs
+) -> D2Q9DensityDistribution<Dimension, Size, Scalar>
 {
-    D2Q9DensityDistribution<Scalar> result;
+    D2Q9DensityDistribution<Dimension, Size, Scalar> result;
 
     for (std::size_t i = 0; i < result.size(); ++i)
     {
@@ -20,13 +20,13 @@ auto operator+(
     return result;
 }
 
-template <std::floating_point Scalar>
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto operator-(
-    const D2Q9DensityDistribution<Scalar>& lhs,
-    const D2Q9DensityDistribution<Scalar>& rhs
-) -> D2Q9DensityDistribution<Scalar>
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& lhs,
+    const D2Q9DensityDistribution<Dimension, Size, Scalar>& rhs
+) -> D2Q9DensityDistribution<Dimension, Size, Scalar>
 {
-    D2Q9DensityDistribution<Scalar> result;
+    D2Q9DensityDistribution<Dimension, Size, Scalar> result;
 
     for (std::size_t i = 0; i < result.size(); ++i)
     {
