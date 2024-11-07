@@ -30,4 +30,4 @@ endif()
 gtest_discover_tests(LatticeFlowTest)
 
 # Add test directories
-add_subdirectory(d2q9)
+add_subdirectory(densityDistribution)

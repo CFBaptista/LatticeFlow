@@ -1,15 +1,15 @@
-#ifndef D2Q9_DENSITY_DISTRIBUTION_HPP
-#define D2Q9_DENSITY_DISTRIBUTION_HPP
+#ifndef DENSITY_DISTRIBUTION_HPP
+#define DENSITY_DISTRIBUTION_HPP
 
 #include <array>
 #include <concepts>
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-class D2Q9DensityDistribution
+class DensityDistribution
 {
 public:
-    D2Q9DensityDistribution();
-    D2Q9DensityDistribution(std::initializer_list<Scalar> distribution);
+    DensityDistribution();
+    DensityDistribution(std::initializer_list<Scalar> distribution);
 
     auto operator[](std::size_t index) -> Scalar&;
     auto operator[](std::size_t index) const -> const Scalar&;
@@ -43,6 +43,6 @@ private:
     std::array<Scalar, Size> distribution_;
 };
 
-#include "D2Q9DensityDistribution.tpp"
+#include "DensityDistribution.tpp"
 
-#endif // D2Q9_DENSITY_DISTRIBUTION_HPP
+#endif // DENSITY_DISTRIBUTION_HPP

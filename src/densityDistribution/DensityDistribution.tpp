@@ -1,18 +1,18 @@
-#ifndef D2Q9_DENSITY_DISTRIBUTION_TPP
-#define D2Q9_DENSITY_DISTRIBUTION_TPP
+#ifndef DENSITY_DISTRIBUTION_TPP
+#define DENSITY_DISTRIBUTION_TPP
 
 ;
-#include "D2Q9DensityDistribution.hpp"
+#include "DensityDistribution.hpp"
 #include <limits>
 #include <numeric>
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-D2Q9DensityDistribution<Dimension, Size, Scalar>::D2Q9DensityDistribution() : distribution_{0.0}
+DensityDistribution<Dimension, Size, Scalar>::DensityDistribution() : distribution_{0.0}
 {
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-D2Q9DensityDistribution<Dimension, Size, Scalar>::D2Q9DensityDistribution(
+DensityDistribution<Dimension, Size, Scalar>::DensityDistribution(
     std::initializer_list<Scalar> distribution
 )
 {
@@ -20,38 +20,38 @@ D2Q9DensityDistribution<Dimension, Size, Scalar>::D2Q9DensityDistribution(
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto D2Q9DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index) -> Scalar&
+auto DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index) -> Scalar&
 {
     return distribution_.at(index);
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto D2Q9DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index
+auto DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index
 ) const -> const Scalar&
 {
     return distribution_.at(index);
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-constexpr auto D2Q9DensityDistribution<Dimension, Size, Scalar>::dimension() const -> std::size_t
+constexpr auto DensityDistribution<Dimension, Size, Scalar>::dimension() const -> std::size_t
 {
     return Dimension;
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-constexpr auto D2Q9DensityDistribution<Dimension, Size, Scalar>::size() const -> std::size_t
+constexpr auto DensityDistribution<Dimension, Size, Scalar>::size() const -> std::size_t
 {
     return Size;
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto D2Q9DensityDistribution<Dimension, Size, Scalar>::weight(std::size_t index) -> const Scalar&
+auto DensityDistribution<Dimension, Size, Scalar>::weight(std::size_t index) -> const Scalar&
 {
-    return D2Q9DensityDistribution::weight_.at(index);
+    return DensityDistribution::weight_.at(index);
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto D2Q9DensityDistribution<Dimension, Size, Scalar>::computeVelocity(
+auto DensityDistribution<Dimension, Size, Scalar>::computeVelocity(
     const Scalar& density,
     const std::array<Scalar, Dimension>& momentum
 ) -> std::array<Scalar, Dimension>
@@ -65,14 +65,14 @@ auto D2Q9DensityDistribution<Dimension, Size, Scalar>::computeVelocity(
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto D2Q9DensityDistribution<Dimension, Size, Scalar>::computeDensity() const -> Scalar
+auto DensityDistribution<Dimension, Size, Scalar>::computeDensity() const -> Scalar
 {
     const Scalar density{std::reduce(distribution_.begin(), distribution_.end())};
     return density;
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto D2Q9DensityDistribution<Dimension, Size, Scalar>::computeMomentum() const
+auto DensityDistribution<Dimension, Size, Scalar>::computeMomentum() const
     -> std::array<Scalar, Dimension>
 {
     const Scalar momentumX =
@@ -86,4 +86,4 @@ auto D2Q9DensityDistribution<Dimension, Size, Scalar>::computeMomentum() const
     return momentum;
 }
 
-#endif // D2Q9_DENSITY_DISTRIBUTION_TPP
+#endif // DENSITY_DISTRIBUTION_TPP
