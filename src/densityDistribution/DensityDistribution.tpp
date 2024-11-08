@@ -86,4 +86,22 @@ auto DensityDistribution<Dimension, Size, Scalar>::computeMomentum() const
     return momentum;
 }
 
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+constexpr auto
+DensityDistribution<Dimension, Size, Scalar>::setWeights_() -> std::array<Scalar, Size>
+{
+    constexpr Scalar weightCenter{4.0 / 9.0};
+    constexpr Scalar weightRight{1.0 / 9.0};
+    constexpr Scalar weightTop{1.0 / 9.0};
+    constexpr Scalar weightLeft{1.0 / 9.0};
+    constexpr Scalar weightBottom{1.0 / 9.0};
+    constexpr Scalar weightTopRight{1.0 / 36.0};
+    constexpr Scalar weightTopLeft{1.0 / 36.0};
+    constexpr Scalar weightBottomLeft{1.0 / 36.0};
+    constexpr Scalar weightBottomRight{1.0 / 36.0};
+
+    return {weightCenter,   weightRight,   weightTop,        weightLeft,       weightBottom,
+            weightTopRight, weightTopLeft, weightBottomLeft, weightBottomRight};
+}
+
 #endif // DENSITY_DISTRIBUTION_TPP

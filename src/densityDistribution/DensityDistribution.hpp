@@ -26,6 +26,8 @@ public:
     auto computeMomentum() const -> std::array<Scalar, Dimension>;
 
 private:
+    static constexpr auto setWeights_() -> std::array<Scalar, Size>;
+
     static constexpr std::size_t center_{0};
     static constexpr std::size_t right_{1};
     static constexpr std::size_t top_{2};
@@ -36,9 +38,7 @@ private:
     static constexpr std::size_t bottomLeft_{7};
     static constexpr std::size_t bottomRight_{8};
 
-    static constexpr std::array<Scalar, Size> weight_{4.0 / 9.0,  1.0 / 9.0,  1.0 / 9.0,
-                                                      1.0 / 9.0,  1.0 / 9.0,  1.0 / 36.0,
-                                                      1.0 / 36.0, 1.0 / 36.0, 1.0 / 36.0};
+    static constexpr std::array<Scalar, Size> weight_{setWeights_()};
 
     std::array<Scalar, Size> distribution_;
 };
