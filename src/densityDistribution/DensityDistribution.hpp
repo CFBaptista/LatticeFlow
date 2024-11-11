@@ -22,20 +22,11 @@ public:
 
     constexpr auto dimension() const -> std::size_t;
     constexpr auto size() const -> std::size_t;
+
     static auto weight(std::size_t index) -> const Scalar&;
 
 private:
     static constexpr auto setWeights_() -> std::array<Scalar, Size>;
-
-    static constexpr std::size_t center_{0};
-    static constexpr std::size_t right_{1};
-    static constexpr std::size_t top_{2};
-    static constexpr std::size_t left_{3};
-    static constexpr std::size_t bottom_{4};
-    static constexpr std::size_t topRight_{5};
-    static constexpr std::size_t topLeft_{6};
-    static constexpr std::size_t bottomLeft_{7};
-    static constexpr std::size_t bottomRight_{8};
 
     static constexpr std::array<Scalar, Size> weight_{setWeights_()};
 
@@ -43,7 +34,14 @@ private:
 };
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+constexpr auto defineWeights() -> std::array<Scalar, Size>;
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto computeDensity(const DensityDistribution<Dimension, Size, Scalar>& distribution) -> Scalar;
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto computeMomentum(const DensityDistribution<Dimension, Size, Scalar>& distribution
+) -> std::array<Scalar, Dimension>;
 
 #include "DensityDistribution.tpp"
 
