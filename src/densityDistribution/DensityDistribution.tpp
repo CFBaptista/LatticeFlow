@@ -3,8 +3,6 @@
 
 ;
 #include "DensityDistribution.hpp"
-#include <limits>
-#include <numeric>
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 DensityDistribution<Dimension, Size, Scalar>::DensityDistribution() : distribution_{0.0}
