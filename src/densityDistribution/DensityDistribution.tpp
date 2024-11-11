@@ -33,6 +33,46 @@ auto DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto DensityDistribution<Dimension, Size, Scalar>::begin() -> std::array<Scalar, Size>::iterator
+{
+    return distribution_.begin();
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto DensityDistribution<Dimension, Size, Scalar>::begin() const
+    -> std::array<Scalar, Size>::const_iterator
+{
+    return distribution_.begin();
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto DensityDistribution<Dimension, Size, Scalar>::end() -> std::array<Scalar, Size>::iterator
+{
+    return distribution_.end();
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto DensityDistribution<Dimension, Size, Scalar>::end() const
+    -> std::array<Scalar, Size>::const_iterator
+{
+    return distribution_.end();
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto DensityDistribution<Dimension, Size, Scalar>::cbegin() const
+    -> std::array<Scalar, Size>::const_iterator
+{
+    return distribution_.cbegin();
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto DensityDistribution<Dimension, Size, Scalar>::cend() const
+    -> std::array<Scalar, Size>::const_iterator
+{
+    return distribution_.cend();
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 constexpr auto DensityDistribution<Dimension, Size, Scalar>::dimension() const -> std::size_t
 {
     return Dimension;
@@ -51,42 +91,6 @@ auto DensityDistribution<Dimension, Size, Scalar>::weight(std::size_t index) -> 
 }
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto DensityDistribution<Dimension, Size, Scalar>::computeVelocity(
-    const Scalar& density,
-    const std::array<Scalar, Dimension>& momentum
-) -> std::array<Scalar, Dimension>
-{
-    const Scalar densityEpsilon = density + std::numeric_limits<Scalar>::epsilon();
-    const std::array<Scalar, Dimension> velocity{
-        momentum[0] / densityEpsilon, momentum[1] / densityEpsilon
-    };
-
-    return velocity;
-}
-
-template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto DensityDistribution<Dimension, Size, Scalar>::computeDensity() const -> Scalar
-{
-    const Scalar density{std::reduce(distribution_.begin(), distribution_.end())};
-    return density;
-}
-
-template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
-auto DensityDistribution<Dimension, Size, Scalar>::computeMomentum() const
-    -> std::array<Scalar, Dimension>
-{
-    const Scalar momentumX =
-        (distribution_[right_] + distribution_[topRight_] + distribution_[bottomRight_]) -
-        (distribution_[left_] + distribution_[topLeft_] + distribution_[bottomLeft_]);
-    const Scalar momentumY =
-        (distribution_[top_] + distribution_[topRight_] + distribution_[topLeft_]) -
-        (distribution_[bottom_] + distribution_[bottomLeft_] + distribution_[bottomRight_]);
-    const std::array<Scalar, Dimension> momentum{momentumX, momentumY};
-
-    return momentum;
-}
-
-template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 constexpr auto
 DensityDistribution<Dimension, Size, Scalar>::setWeights_() -> std::array<Scalar, Size>
 {
@@ -102,6 +106,26 @@ DensityDistribution<Dimension, Size, Scalar>::setWeights_() -> std::array<Scalar
 
     return {weightCenter,   weightRight,   weightTop,        weightLeft,       weightBottom,
             weightTopRight, weightTopLeft, weightBottomLeft, weightBottomRight};
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto computeDensity(const DensityDistribution<Dimension, Size, Scalar>& distribution) -> Scalar
+{
+    const Scalar density{std::reduce(distribution.begin(), distribution.end())};
+    return density;
+}
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto computeMomentum(DensityDistribution<Dimension, Size, Scalar> distribution
+) -> std::array<Scalar, Dimension>
+{
+    const Scalar momentumX = (distribution[1] + distribution[5] + distribution[8]) -
+                             (distribution[3] + distribution[6] + distribution[7]);
+    const Scalar momentumY = (distribution[2] + distribution[5] + distribution[6]) -
+                             (distribution[4] + distribution[7] + distribution[8]);
+    const std::array<Scalar, Dimension> momentum{momentumX, momentumY};
+
+    return momentum;
 }
 
 #endif // DENSITY_DISTRIBUTION_TPP

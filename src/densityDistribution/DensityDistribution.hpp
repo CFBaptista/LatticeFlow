@@ -13,17 +13,16 @@ public:
 
     auto operator[](std::size_t index) -> Scalar&;
     auto operator[](std::size_t index) const -> const Scalar&;
+    auto begin() -> std::array<Scalar, Size>::iterator;
+    auto begin() const -> std::array<Scalar, Size>::const_iterator;
+    auto end() -> std::array<Scalar, Size>::iterator;
+    auto end() const -> std::array<Scalar, Size>::const_iterator;
+    auto cbegin() const -> std::array<Scalar, Size>::const_iterator;
+    auto cend() const -> std::array<Scalar, Size>::const_iterator;
 
     constexpr auto dimension() const -> std::size_t;
     constexpr auto size() const -> std::size_t;
     static auto weight(std::size_t index) -> const Scalar&;
-
-    static auto
-    computeVelocity(const Scalar& density, const std::array<Scalar, Dimension>& momentum)
-        -> std::array<Scalar, Dimension>;
-
-    auto computeDensity() const -> Scalar;
-    auto computeMomentum() const -> std::array<Scalar, Dimension>;
 
 private:
     static constexpr auto setWeights_() -> std::array<Scalar, Size>;
@@ -42,6 +41,9 @@ private:
 
     std::array<Scalar, Size> distribution_;
 };
+
+template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
+auto computeDensity(const DensityDistribution<Dimension, Size, Scalar>& distribution) -> Scalar;
 
 #include "DensityDistribution.tpp"
 

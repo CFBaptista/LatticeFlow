@@ -33,25 +33,6 @@ TYPED_TEST(DefaultDensityDistributionTest, DistributionEqualsUniformZero)
     }
 }
 
-TYPED_TEST(DefaultDensityDistributionTest, VelocityEqualsZeroVector)
-{
-    // Given
-
-    const std::array<TypeParam, 2> expectedVelocity{0.0, 0.0};
-
-    // When
-
-    const TypeParam density{this->distribution.computeDensity()};
-    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
-    const std::array<TypeParam, 2> velocity{
-        DensityDistribution<2, 9, TypeParam>::computeVelocity(density, momentum)
-    };
-
-    // Then
-
-    EXPECT_EQ(velocity, expectedVelocity);
-}
-
 TYPED_TEST(DefaultDensityDistributionTest, DensityEqualsZero)
 {
     // Given
@@ -60,7 +41,7 @@ TYPED_TEST(DefaultDensityDistributionTest, DensityEqualsZero)
 
     // When
 
-    const TypeParam density{this->distribution.computeDensity()};
+    const TypeParam density{computeDensity(this->distribution)};
 
     // Then
 
@@ -75,7 +56,7 @@ TYPED_TEST(DefaultDensityDistributionTest, MomentumEqualsZeroVector)
 
     // When
 
-    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
+    const std::array<TypeParam, 2> momentum{computeMomentum(this->distribution)};
 
     // Then
 
@@ -87,14 +68,15 @@ class GeneralDensityDistributionTest : public ::testing::Test
 {
 protected:
     GeneralDensityDistributionTest()
+        : distribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
+                       6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0},
+          constDistribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
+                            6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0}
     {
-        for (std::size_t i = 0; i < distribution.size(); ++i)
-        {
-            distribution[i] = static_cast<Scalar>(i + 1) / (i + 3);
-        }
     }
 
     DensityDistribution<2, 9, Scalar> distribution;
+    DensityDistribution<2, 9, Scalar> constDistribution;
 };
 
 TYPED_TEST_SUITE(GeneralDensityDistributionTest, FloatingPointTypes);
@@ -174,6 +156,84 @@ TYPED_TEST(GeneralDensityDistributionTest, SetValueInNonConstDistribution)
     EXPECT_EQ(this->distribution[index], expectedValue);
 }
 
+TYPED_TEST(GeneralDensityDistributionTest, GetFirstNonConstValueWithBegin)
+{
+    // Given
+
+    const TypeParam expectedValue{1.0 / 3.0};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(*this->distribution.begin(), expectedValue);
+}
+
+TYPED_TEST(GeneralDensityDistributionTest, GetFirstConstValueWithBegin)
+{
+    // Given
+
+    const TypeParam expectedValue{1.0 / 3.0};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(*this->constDistribution.begin(), expectedValue);
+}
+
+TYPED_TEST(GeneralDensityDistributionTest, GetLastNonConstValueWithEnd)
+{
+    // Given
+
+    const TypeParam expectedValue{9.0 / 11.0};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(*(this->distribution.end() - 1), expectedValue);
+}
+
+TYPED_TEST(GeneralDensityDistributionTest, GetLastConstValueWithEnd)
+{
+    // Given
+
+    const TypeParam expectedValue{9.0 / 11.0};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(*(this->constDistribution.end() - 1), expectedValue);
+}
+
+TYPED_TEST(GeneralDensityDistributionTest, GetFirstConstValueWithCBegin)
+{
+    // Given
+
+    const TypeParam expectedValue{1.0 / 3.0};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(*this->constDistribution.cbegin(), expectedValue);
+}
+
+TYPED_TEST(GeneralDensityDistributionTest, GetLastConstValueWithCEnd)
+{
+    // Given
+
+    const TypeParam expectedValue{9.0 / 11.0};
+
+    // When
+
+    // Then
+
+    EXPECT_EQ(*(this->constDistribution.cend() - 1), expectedValue);
+}
+
 TYPED_TEST(GeneralDensityDistributionTest, DistributionEqualsSetValues)
 {
     // Given
@@ -193,30 +253,6 @@ TYPED_TEST(GeneralDensityDistributionTest, DistributionEqualsSetValues)
     }
 }
 
-TYPED_TEST(
-    GeneralDensityDistributionTest,
-    VelocityEqualsDistributionFirstMomentDividedbyZerothMoment
-)
-{
-    // Given
-
-    const TypeParam density{this->distribution.computeDensity()};
-    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
-    const std::array<TypeParam, 2> expectedVelocity{-0.029573048941398609, -0.034342505053928767};
-    const TypeParam tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
-
-    // When
-
-    const std::array<TypeParam, 2> velocity{
-        DensityDistribution<2, 9, TypeParam>::computeVelocity(density, momentum)
-    };
-
-    // Then
-
-    EXPECT_NEAR(velocity[0], expectedVelocity[0], tolerance);
-    EXPECT_NEAR(velocity[1], expectedVelocity[1], tolerance);
-}
-
 TYPED_TEST(GeneralDensityDistributionTest, DensityEqualsDistributionZerothMoment)
 {
     // Given
@@ -226,7 +262,7 @@ TYPED_TEST(GeneralDensityDistributionTest, DensityEqualsDistributionZerothMoment
 
     // When
 
-    const TypeParam density{this->distribution.computeDensity()};
+    const TypeParam density{computeDensity(this->distribution)};
 
     // Then
 
@@ -242,7 +278,7 @@ TYPED_TEST(GeneralDensityDistributionTest, MomentumEqualsDistributionFirstMoment
 
     // When
 
-    const std::array<TypeParam, 2> momentum{this->distribution.computeMomentum()};
+    const std::array<TypeParam, 2> momentum{computeMomentum(this->distribution)};
 
     // Then
 
