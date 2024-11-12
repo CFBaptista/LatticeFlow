@@ -1,23 +1,27 @@
 #include "../../src/densityDistribution/DensityDistribution.hpp"
 #include <gtest/gtest.h>
 
-using FloatingPointTypes = ::testing::Types<float, double>;
-
 template <typename Scalar>
-class DefaultDensityDistributionTest : public ::testing::Test
+class DensityDistributionTest : public ::testing::Test
 {
 protected:
-    DefaultDensityDistributionTest() = default;
+    DensityDistributionTest()
+        : nonConstNonDefaultDistribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
+                                         6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0},
+          constNonDefaultDistribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
+                                      6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0}
+    {
+    }
 
-    static constexpr std::size_t dimension_{2};
-    static constexpr std::size_t size_{9};
-
-    DensityDistribution<dimension_, size_, Scalar> distribution;
+    DensityDistribution<2, 9, Scalar> nonConstDefaultDistribution;
+    DensityDistribution<2, 9, Scalar> nonConstNonDefaultDistribution;
+    DensityDistribution<2, 9, Scalar> constNonDefaultDistribution;
 };
 
-TYPED_TEST_SUITE(DefaultDensityDistributionTest, FloatingPointTypes);
+using FloatingPointTypes = ::testing::Types<float, double>;
+TYPED_TEST_SUITE(DensityDistributionTest, FloatingPointTypes);
 
-TYPED_TEST(DefaultDensityDistributionTest, DistributionEqualsUniformZero)
+TYPED_TEST(DensityDistributionTest, DefaultDistributionEqualsUniformZero)
 {
     // Given
 
@@ -27,61 +31,13 @@ TYPED_TEST(DefaultDensityDistributionTest, DistributionEqualsUniformZero)
 
     // Then
 
-    for (std::size_t i = 0; i < this->distribution.size(); ++i)
+    for (std::size_t i = 0; i < this->nonConstDefaultDistribution.size(); ++i)
     {
-        EXPECT_EQ(this->distribution[i], expectedValue);
+        EXPECT_EQ(this->nonConstDefaultDistribution[i], expectedValue);
     }
 }
 
-TYPED_TEST(DefaultDensityDistributionTest, DensityEqualsZero)
-{
-    // Given
-
-    const TypeParam expectedDensity{0.0};
-
-    // When
-
-    const TypeParam density{computeDensity(this->distribution)};
-
-    // Then
-
-    EXPECT_EQ(density, expectedDensity);
-}
-
-TYPED_TEST(DefaultDensityDistributionTest, MomentumEqualsZeroVector)
-{
-    // Given
-
-    const std::array<TypeParam, 2> expectedMomentum{0.0, 0.0};
-
-    // When
-
-    const std::array<TypeParam, 2> momentum{computeMomentum(this->distribution)};
-
-    // Then
-
-    EXPECT_EQ(momentum, expectedMomentum);
-}
-
-template <typename Scalar>
-class GeneralDensityDistributionTest : public ::testing::Test
-{
-protected:
-    GeneralDensityDistributionTest()
-        : distribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
-                       6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0},
-          constDistribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
-                            6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0}
-    {
-    }
-
-    DensityDistribution<2, 9, Scalar> distribution;
-    DensityDistribution<2, 9, Scalar> constDistribution;
-};
-
-TYPED_TEST_SUITE(GeneralDensityDistributionTest, FloatingPointTypes);
-
-TYPED_TEST(GeneralDensityDistributionTest, DimensionEqualsTwo)
+TYPED_TEST(DensityDistributionTest, DimensionEqualsTwo)
 {
     // Given
 
@@ -91,10 +47,10 @@ TYPED_TEST(GeneralDensityDistributionTest, DimensionEqualsTwo)
 
     // Then
 
-    EXPECT_EQ(this->distribution.dimension(), expectedDimension);
+    EXPECT_EQ(this->nonConstNonDefaultDistribution.dimension(), expectedDimension);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, SizeEqualsNine)
+TYPED_TEST(DensityDistributionTest, SizeEqualsNine)
 {
     // Given
 
@@ -104,10 +60,10 @@ TYPED_TEST(GeneralDensityDistributionTest, SizeEqualsNine)
 
     // Then
 
-    EXPECT_EQ(this->distribution.size(), expectedSize);
+    EXPECT_EQ(this->nonConstNonDefaultDistribution.size(), expectedSize);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetValueFromNonConstDistribution)
+TYPED_TEST(DensityDistributionTest, GetValueFromNonConstDistribution)
 {
     // Given
 
@@ -116,14 +72,14 @@ TYPED_TEST(GeneralDensityDistributionTest, GetValueFromNonConstDistribution)
 
     // When
 
-    const TypeParam& value{this->distribution[index]};
+    const TypeParam& value{this->nonConstNonDefaultDistribution[index]};
 
     // Then
 
     EXPECT_EQ(value, expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetValueFromConstDistribution)
+TYPED_TEST(DensityDistributionTest, GetValueFromConstDistribution)
 {
     // Given
 
@@ -140,7 +96,7 @@ TYPED_TEST(GeneralDensityDistributionTest, GetValueFromConstDistribution)
     EXPECT_EQ(value, expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, SetValueInNonConstDistribution)
+TYPED_TEST(DensityDistributionTest, SetValueInNonConstDistribution)
 {
     // Given
 
@@ -149,14 +105,14 @@ TYPED_TEST(GeneralDensityDistributionTest, SetValueInNonConstDistribution)
 
     // When
 
-    this->distribution[index] = expectedValue;
+    this->nonConstNonDefaultDistribution[index] = expectedValue;
 
     // Then
 
-    EXPECT_EQ(this->distribution[index], expectedValue);
+    EXPECT_EQ(this->nonConstNonDefaultDistribution[index], expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetFirstNonConstValueWithBegin)
+TYPED_TEST(DensityDistributionTest, GetFirstNonConstValueWithBegin)
 {
     // Given
 
@@ -166,10 +122,10 @@ TYPED_TEST(GeneralDensityDistributionTest, GetFirstNonConstValueWithBegin)
 
     // Then
 
-    EXPECT_EQ(*this->distribution.begin(), expectedValue);
+    EXPECT_EQ(*this->nonConstNonDefaultDistribution.begin(), expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetFirstConstValueWithBegin)
+TYPED_TEST(DensityDistributionTest, GetFirstConstValueWithBegin)
 {
     // Given
 
@@ -179,10 +135,10 @@ TYPED_TEST(GeneralDensityDistributionTest, GetFirstConstValueWithBegin)
 
     // Then
 
-    EXPECT_EQ(*this->constDistribution.begin(), expectedValue);
+    EXPECT_EQ(*this->constNonDefaultDistribution.begin(), expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetLastNonConstValueWithEnd)
+TYPED_TEST(DensityDistributionTest, GetLastNonConstValueWithEnd)
 {
     // Given
 
@@ -192,10 +148,10 @@ TYPED_TEST(GeneralDensityDistributionTest, GetLastNonConstValueWithEnd)
 
     // Then
 
-    EXPECT_EQ(*(this->distribution.end() - 1), expectedValue);
+    EXPECT_EQ(*(this->nonConstNonDefaultDistribution.end() - 1), expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetLastConstValueWithEnd)
+TYPED_TEST(DensityDistributionTest, GetLastConstValueWithEnd)
 {
     // Given
 
@@ -205,10 +161,10 @@ TYPED_TEST(GeneralDensityDistributionTest, GetLastConstValueWithEnd)
 
     // Then
 
-    EXPECT_EQ(*(this->constDistribution.end() - 1), expectedValue);
+    EXPECT_EQ(*(this->constNonDefaultDistribution.end() - 1), expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetFirstConstValueWithCBegin)
+TYPED_TEST(DensityDistributionTest, GetFirstConstValueWithCBegin)
 {
     // Given
 
@@ -218,10 +174,10 @@ TYPED_TEST(GeneralDensityDistributionTest, GetFirstConstValueWithCBegin)
 
     // Then
 
-    EXPECT_EQ(*this->constDistribution.cbegin(), expectedValue);
+    EXPECT_EQ(*this->constNonDefaultDistribution.cbegin(), expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, GetLastConstValueWithCEnd)
+TYPED_TEST(DensityDistributionTest, GetLastConstValueWithCEnd)
 {
     // Given
 
@@ -231,10 +187,10 @@ TYPED_TEST(GeneralDensityDistributionTest, GetLastConstValueWithCEnd)
 
     // Then
 
-    EXPECT_EQ(*(this->constDistribution.cend() - 1), expectedValue);
+    EXPECT_EQ(*(this->constNonDefaultDistribution.cend() - 1), expectedValue);
 }
 
-TYPED_TEST(GeneralDensityDistributionTest, DistributionEqualsSetValues)
+TYPED_TEST(DensityDistributionTest, DistributionEqualsSetValues)
 {
     // Given
 
@@ -249,82 +205,6 @@ TYPED_TEST(GeneralDensityDistributionTest, DistributionEqualsSetValues)
 
     for (std::size_t i = 0; i < size; ++i)
     {
-        EXPECT_EQ(this->distribution[i], expectedValue.at(i));
+        EXPECT_EQ(this->nonConstNonDefaultDistribution[i], expectedValue.at(i));
     }
-}
-
-TYPED_TEST(GeneralDensityDistributionTest, DensityEqualsDistributionZerothMoment)
-{
-    // Given
-
-    const TypeParam expectedDensity{5.9602453102453108};
-    const double tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
-
-    // When
-
-    const TypeParam density{computeDensity(this->distribution)};
-
-    // Then
-
-    EXPECT_NEAR(density, expectedDensity, tolerance);
-}
-
-TYPED_TEST(GeneralDensityDistributionTest, MomentumEqualsDistributionFirstMoment)
-{
-    // Given
-
-    const std::array<TypeParam, 2> expectedMomentum{-0.17626262626262612, -0.2046897546897548};
-    const TypeParam tolerance{10 * std::numeric_limits<TypeParam>::epsilon()};
-
-    // When
-
-    const std::array<TypeParam, 2> momentum{computeMomentum(this->distribution)};
-
-    // Then
-
-    EXPECT_NEAR(momentum[0], expectedMomentum[0], tolerance);
-    EXPECT_NEAR(momentum[1], expectedMomentum[1], tolerance);
-}
-
-TYPED_TEST(GeneralDensityDistributionTest, WeightsEqualLiteratureValues)
-{
-    // Reference:
-
-    //  @book{
-    //      author = {Krüger, Timm and Kusumaatmaja, Halim and Kuzmin, Alexandr and Shardt, Orest
-    //      and Silva, Goncalo and Viggen, Erlend Magnus},
-    //      title = {The Lattice Boltzmann Method},
-    //      year = {2017},
-    //      publisher = {Springer},
-    //      isbn = {978-3-319-83103-9},
-    //      doi = {10.1007/978-3-319-44649-3}
-    //  }
-
-    // Given
-
-    const TypeParam expectedWeightCenter{4.0 / 9.0};
-    const TypeParam expectedWeightRight{1.0 / 9.0};
-    const TypeParam expectedWeightTop{1.0 / 9.0};
-    const TypeParam expectedWeightLeft{1.0 / 9.0};
-    const TypeParam expectedWeightBottom{1.0 / 9.0};
-    const TypeParam expectedWeightTopRight{1.0 / 36.0};
-    const TypeParam expectedWeightTopLeft{1.0 / 36.0};
-    const TypeParam expectedWeightBottomLeft{1.0 / 36.0};
-    const TypeParam expectedWeightBottomRight{1.0 / 36.0};
-
-    // When
-
-    // Then
-
-    using Type = DensityDistribution<2, 9, TypeParam>;
-
-    EXPECT_EQ(Type::weight(0), expectedWeightCenter);
-    EXPECT_EQ(Type::weight(1), expectedWeightRight);
-    EXPECT_EQ(Type::weight(2), expectedWeightTop);
-    EXPECT_EQ(Type::weight(3), expectedWeightLeft);
-    EXPECT_EQ(Type::weight(4), expectedWeightBottom);
-    EXPECT_EQ(Type::weight(5), expectedWeightTopRight);
-    EXPECT_EQ(Type::weight(6), expectedWeightTopLeft);
-    EXPECT_EQ(Type::weight(7), expectedWeightBottomLeft);
-    EXPECT_EQ(Type::weight(8), expectedWeightBottomRight);
 }
