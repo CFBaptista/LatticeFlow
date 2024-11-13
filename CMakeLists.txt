@@ -28,3 +28,6 @@ if (ENABLE_TESTING)
     enable_testing()
     add_subdirectory(test)
 endif()
+
+# Add documentation root directory
+add_subdirectory(doc)
