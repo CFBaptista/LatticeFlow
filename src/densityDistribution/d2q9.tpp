@@ -1,12 +1,31 @@
 #ifndef DENSITY_DISTRIBUTION_D2Q9_TPP
 #define DENSITY_DISTRIBUTION_D2Q9_TPP
 
+/**
+ * @file d2q9.tpp
+ * @brief Implementation of the DensityDistribution class template with 2 dimensions and 9 lattice
+ * vectors that represents a D2Q9 fluid density distribution at a lattice node.
+ */
+
 ;
 #include "d2q9.hpp"
 
+/**
+ * @brief Alias template for DensityDistribution with 2 dimensions and 9 lattice vectors.
+ *
+ * @tparam Scalar The floating-point type of lattice nodal values.
+ */
 template <std::floating_point Scalar>
 using D2Q9 = DensityDistribution<2, 9, Scalar>;
 
+/**
+ * @brief Returns the lattice weights for the D2Q9 model.
+ *
+ * @param distribution A D2Q9 density distribution.
+ * @return The D2Q9 lattice weights.
+ *
+ * @tparam Scalar The floating-point type of lattice nodal values.
+ */
 template <std::floating_point Scalar>
 constexpr auto latticeWeights(const D2Q9<Scalar>& distribution) -> std::array<Scalar, 9>
 {
@@ -29,6 +48,14 @@ constexpr auto latticeWeights(const D2Q9<Scalar>& distribution) -> std::array<Sc
     return weights;
 }
 
+/**
+ * @brief Computes the fluid density of a D2Q9 density distribution.
+ *
+ * @param distribution A D2Q9 density distribution.
+ * @return The fluid density of the D2Q9 density distribution.
+ *
+ * @tparam Scalar The floating-point type of lattice nodal values.
+ */
 template <std::floating_point Scalar>
 auto computeDensity(const D2Q9<Scalar>& distribution) -> Scalar
 {
@@ -36,6 +63,14 @@ auto computeDensity(const D2Q9<Scalar>& distribution) -> Scalar
     return density;
 }
 
+/**
+ * @brief Computes the momentum of a D2Q9 density distribution.
+ *
+ * @param distribution A D2Q9 density distribution.
+ * @return The fluid momentum of the D2Q9 density distribution.
+ *
+ * @tparam Scalar The floating-point type of lattice nodal values.
+ */
 template <std::floating_point Scalar>
 auto computeMomentum(const D2Q9<Scalar>& distribution) -> std::array<Scalar, 2>
 {
