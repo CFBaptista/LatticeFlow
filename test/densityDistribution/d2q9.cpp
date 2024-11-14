@@ -4,15 +4,20 @@
 template <typename Scalar>
 class D2Q9Test : public ::testing::Test
 {
-protected:
-    D2Q9Test()
-        : nonDefaultDistribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
-                                 6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0}
-    {
-    }
+private:
+    static constexpr std::size_t dimension_{2};
+    static constexpr std::size_t size_{9};
+    static constexpr std::initializer_list<Scalar> distribution_{1.0 / 3.0, 2.0 / 4.0,  3.0 / 5.0,
+                                                                 4.0 / 6.0, 5.0 / 7.0,  6.0 / 8.0,
+                                                                 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0};
 
-    DensityDistribution<2, 9, Scalar> defaultDistribution;
-    DensityDistribution<2, 9, Scalar> nonDefaultDistribution;
+protected:
+    D2Q9Test() : nonDefaultDistribution{distribution_} {}
+
+    // NOLINTBEGIN(cppcoreguidelines-non-private-member-variables-in-classes)
+    DensityDistribution<dimension_, size_, Scalar> defaultDistribution;
+    DensityDistribution<dimension_, size_, Scalar> nonDefaultDistribution;
+    // NOLINTEND(cppcoreguidelines-non-private-member-variables-in-classes)
 };
 
 using FloatingPointTypes = ::testing::Types<float, double>;

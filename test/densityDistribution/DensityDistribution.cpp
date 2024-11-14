@@ -4,18 +4,25 @@
 template <typename Scalar>
 class DensityDistributionTest : public ::testing::Test
 {
+private:
+    static constexpr std::size_t dimension_{2};
+    static constexpr std::size_t size_{9};
+    static constexpr std::initializer_list<Scalar> distribution_{1.0 / 3.0, 2.0 / 4.0,  3.0 / 5.0,
+                                                                 4.0 / 6.0, 5.0 / 7.0,  6.0 / 8.0,
+                                                                 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0};
+
 protected:
     DensityDistributionTest()
-        : nonConstNonDefaultDistribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
-                                         6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0},
-          constNonDefaultDistribution{1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0,  4.0 / 6.0, 5.0 / 7.0,
-                                      6.0 / 8.0, 7.0 / 9.0, 8.0 / 10.0, 9.0 / 11.0}
+        : nonConstNonDefaultDistribution{distribution_}, constNonDefaultDistribution{distribution_}
     {
     }
 
-    DensityDistribution<2, 9, Scalar> nonConstDefaultDistribution;
-    DensityDistribution<2, 9, Scalar> nonConstNonDefaultDistribution;
-    DensityDistribution<2, 9, Scalar> constNonDefaultDistribution;
+    // NOLINTBEGIN(cppcoreguidelines-non-private-member-variables-in-classes)
+    DensityDistribution<dimension_, size_, Scalar> nonConstDefaultDistribution;
+    DensityDistribution<dimension_, size_, Scalar> nonConstNonDefaultDistribution;
+    // NOLINTNEXTLINE(cppcoreguidelines-avoid-const-or-ref-data-members)
+    const DensityDistribution<dimension_, size_, Scalar> constNonDefaultDistribution;
+    // NOLINTEND(cppcoreguidelines-non-private-member-variables-in-classes)
 };
 
 using FloatingPointTypes = ::testing::Types<float, double>;

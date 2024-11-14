@@ -2,7 +2,6 @@
 #define DENSITY_DISTRIBUTION_HPP
 
 #include <array>
-#include <numeric>
 
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 class DensityDistribution

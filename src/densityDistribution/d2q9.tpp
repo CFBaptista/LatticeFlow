@@ -10,13 +10,7 @@
 ;
 #include "d2q9.hpp"
 
-/**
- * @brief Alias template for DensityDistribution with 2 dimensions and 9 lattice vectors.
- *
- * @tparam Scalar The floating-point type of lattice nodal values.
- */
-template <std::floating_point Scalar>
-using D2Q9 = DensityDistribution<2, 9, Scalar>;
+#include <numeric>
 
 /**
  * @brief Returns the lattice weights for the D2Q9 model.
@@ -27,7 +21,7 @@ using D2Q9 = DensityDistribution<2, 9, Scalar>;
  * @tparam Scalar The floating-point type of lattice nodal values.
  */
 template <std::floating_point Scalar>
-constexpr auto latticeWeights(const D2Q9<Scalar>& distribution) -> std::array<Scalar, 9>
+constexpr auto latticeWeights(const D2Q9<Scalar>& distribution) -> std::array<Scalar, D2Q9_SIZE>
 {
     static_cast<void>(distribution);
 
@@ -72,13 +66,13 @@ auto computeDensity(const D2Q9<Scalar>& distribution) -> Scalar
  * @tparam Scalar The floating-point type of lattice nodal values.
  */
 template <std::floating_point Scalar>
-auto computeMomentum(const D2Q9<Scalar>& distribution) -> std::array<Scalar, 2>
+auto computeMomentum(const D2Q9<Scalar>& distribution) -> std::array<Scalar, D2Q9_DIMENSION>
 {
     const Scalar momentumX = (distribution[1] + distribution[5] + distribution[8]) -
                              (distribution[3] + distribution[6] + distribution[7]);
     const Scalar momentumY = (distribution[2] + distribution[5] + distribution[6]) -
                              (distribution[4] + distribution[7] + distribution[8]);
-    const std::array<Scalar, 2> momentum{momentumX, momentumY};
+    const std::array<Scalar, D2Q9_DIMENSION> momentum{momentumX, momentumY};
 
     return momentum;
 }

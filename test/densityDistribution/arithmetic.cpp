@@ -6,14 +6,19 @@ using FloatingPointTypes = ::testing::Types<float, double>;
 template <typename Scalar>
 class DensityDistributionArithmeticTest : public ::testing::Test
 {
+private:
+    static constexpr std::size_t dimension_{2};
+    static constexpr std::size_t size_{9};
+    static constexpr std::initializer_list<Scalar> distribution1_{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    static constexpr std::initializer_list<Scalar> distribution2_{2, 4, 6, 8, 10, 12, 14, 16, 18};
+
 protected:
     DensityDistributionArithmeticTest() = default;
 
-    static constexpr std::size_t dimension_{2};
-    static constexpr std::size_t size_{9};
-
-    DensityDistribution<dimension_, size_, Scalar> distribution1{1, 2, 3, 4, 5, 6, 7, 8, 9};
-    DensityDistribution<dimension_, size_, Scalar> distribution2{2, 4, 6, 8, 10, 12, 14, 16, 18};
+    // NOLINTBEGIN(cppcoreguidelines-non-private-member-variables-in-classes)
+    DensityDistribution<dimension_, size_, Scalar> distribution1{distribution1_};
+    DensityDistribution<dimension_, size_, Scalar> distribution2{distribution2_};
+    // NOLINTEND(cppcoreguidelines-non-private-member-variables-in-classes)
 };
 
 TYPED_TEST_SUITE(DensityDistributionArithmeticTest, FloatingPointTypes);
@@ -27,8 +32,9 @@ TYPED_TEST(DensityDistributionArithmeticTest, AddingTwoDistributionsReturnsSumOf
 
     // When
 
-    const DensityDistribution<2, 9, TypeParam> summedDistribution =
-        this->distribution1 + this->distribution2;
+    const DensityDistribution<2, 9, TypeParam> summedDistribution = operator+(
+        this->distribution1, this->distribution2
+    );
 
     // Then
 
@@ -50,8 +56,9 @@ TYPED_TEST(
 
     // When
 
-    const DensityDistribution<2, 9, TypeParam> summedDistribution =
-        this->distribution1 - this->distribution2;
+    const DensityDistribution<2, 9, TypeParam> summedDistribution = operator-(
+        this->distribution1, this->distribution2
+    );
 
     // Then
 
