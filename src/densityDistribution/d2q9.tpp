@@ -3,8 +3,8 @@
 
 /**
  * @file d2q9.tpp
- * @brief Implementation of the DensityDistribution class template with 2 dimensions and 9 lattice
- * vectors that represents a D2Q9 fluid density distribution at a lattice node.
+ * @brief Implementation of non-member functions that operate on DensityDistribution<2, 9, *>
+ * objects.
  */
 
 ;
@@ -13,12 +13,12 @@
 #include <numeric>
 
 /**
- * @brief Returns the lattice weights for the D2Q9 model.
+ * @brief Returns the lattice weights for the D2Q9 lattice model.
  *
  * @param distribution A D2Q9 density distribution.
  * @return The D2Q9 lattice weights.
  *
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::floating_point Scalar>
 constexpr auto latticeWeights(const D2Q9<Scalar>& distribution) -> std::array<Scalar, D2Q9_SIZE>
@@ -43,12 +43,12 @@ constexpr auto latticeWeights(const D2Q9<Scalar>& distribution) -> std::array<Sc
 }
 
 /**
- * @brief Computes the fluid density of a D2Q9 density distribution.
+ * @brief Computes the mass density of a D2Q9 density distribution.
  *
  * @param distribution A D2Q9 density distribution.
- * @return The fluid density of the D2Q9 density distribution.
+ * @return The mass density of the D2Q9 density distribution.
  *
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::floating_point Scalar>
 auto computeDensity(const D2Q9<Scalar>& distribution) -> Scalar
@@ -58,12 +58,12 @@ auto computeDensity(const D2Q9<Scalar>& distribution) -> Scalar
 }
 
 /**
- * @brief Computes the momentum of a D2Q9 density distribution.
+ * @brief Computes the momentum density of a D2Q9 density distribution.
  *
  * @param distribution A D2Q9 density distribution.
- * @return The fluid momentum of the D2Q9 density distribution.
+ * @return The momentum density of the D2Q9 density distribution.
  *
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::floating_point Scalar>
 auto computeMomentum(const D2Q9<Scalar>& distribution) -> std::array<Scalar, D2Q9_DIMENSION>

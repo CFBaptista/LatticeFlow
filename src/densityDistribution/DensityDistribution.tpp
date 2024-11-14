@@ -3,8 +3,8 @@
 
 /**
  * @file DensityDistribution.tpp
- * @brief Implementation of the DensityDistribution class template that represents the discrete
- * fluid density distribution at a lattice node.
+ * @brief Implementation of the DensityDistribution class template that represents a generic density
+ * distribution at a lattice node.
  */
 
 ;
@@ -15,9 +15,9 @@
  *
  * Initializes the density distribution with zeros.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 DensityDistribution<Dimension, Size, Scalar>::DensityDistribution() : distribution_{0.0}
@@ -29,9 +29,9 @@ DensityDistribution<Dimension, Size, Scalar>::DensityDistribution() : distributi
  *
  * @param distribution Initial values for the density distribution.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 DensityDistribution<Dimension, Size, Scalar>::DensityDistribution(
@@ -45,11 +45,11 @@ DensityDistribution<Dimension, Size, Scalar>::DensityDistribution(
  * @brief Subscript operator for non-const DensityDistribution objects.
  *
  * @param index Index of the element to access.
- * @return Reference to the element at the specified index.
+ * @return Non-const reference to the element at the specified index.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index) -> Scalar&
@@ -63,9 +63,9 @@ auto DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index)
  * @param index Index of the element to access.
  * @return Const reference to the element at the specified index.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index
@@ -75,13 +75,13 @@ auto DensityDistribution<Dimension, Size, Scalar>::operator[](std::size_t index
 }
 
 /**
- * @brief Returns an iterator to the beginning of the density distribution container.
+ * @brief Returns a non-const iterator to the beginning of the density distribution container.
  *
- * @return Iterator to the beginning of the density distribution container.
+ * @return Non-const iterator to the beginning of the density distribution container.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::begin() -> std::array<Scalar, Size>::iterator
@@ -94,9 +94,9 @@ auto DensityDistribution<Dimension, Size, Scalar>::begin() -> std::array<Scalar,
  *
  * @return Const iterator to the beginning of the density distribution container.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::begin() const
@@ -106,13 +106,13 @@ auto DensityDistribution<Dimension, Size, Scalar>::begin() const
 }
 
 /**
- * @brief Returns an iterator to the end of the density distribution container.
+ * @brief Returns a non-const iterator to the end of the density distribution container.
  *
- * @return Iterator to the end of the density distribution container.
+ * @return Non-const iterator to the end of the density distribution container.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::end() -> std::array<Scalar, Size>::iterator
@@ -125,9 +125,9 @@ auto DensityDistribution<Dimension, Size, Scalar>::end() -> std::array<Scalar, S
  *
  * @return Const iterator to the end of the density distribution container.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::end() const
@@ -141,9 +141,9 @@ auto DensityDistribution<Dimension, Size, Scalar>::end() const
  *
  * @return Const iterator to the beginning of the density distribution container.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::cbegin() const
@@ -157,9 +157,9 @@ auto DensityDistribution<Dimension, Size, Scalar>::cbegin() const
  *
  * @return Const iterator to the end of the density distribution container.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto DensityDistribution<Dimension, Size, Scalar>::cend() const
@@ -169,13 +169,13 @@ auto DensityDistribution<Dimension, Size, Scalar>::cend() const
 }
 
 /**
- * @brief Returns the dimension of the density distribution.
+ * @brief Returns the dimension of the density distribution, which is a compile-time constant.
  *
  * @return The dimension of the density distribution.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 constexpr auto DensityDistribution<Dimension, Size, Scalar>::dimension() const -> std::size_t
@@ -184,13 +184,14 @@ constexpr auto DensityDistribution<Dimension, Size, Scalar>::dimension() const -
 }
 
 /**
- * @brief Returns the number of elements in the density distribution.
+ * @brief Returns the number of elements in the density distribution, which is a compile-time
+ * constant.
  *
  * @return The number of elements in the density distribution.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 constexpr auto DensityDistribution<Dimension, Size, Scalar>::size() const -> std::size_t

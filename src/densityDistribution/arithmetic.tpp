@@ -3,7 +3,8 @@
 
 /**
  * @file arithmetic.tpp
- * @brief Implementation of arithmetic operations for the DensityDistribution class template.
+ * @brief Implementation of non-member arithmetic functions that operate on DensityDistribution
+ * objects.
  */
 
 ;
@@ -16,9 +17,9 @@
  * @param rhs The right-hand side density distribution.
  * @return A new density distribution containing the element-wise sum of lhs and rhs.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto operator+(
@@ -43,9 +44,9 @@ auto operator+(
  * @param rhs The right-hand side density distribution.
  * @return A new density distribution containing the element-wise difference between lhs and rhs.
  *
- * @tparam Dimension The dimension of the lattice.
+ * @tparam Dimension The number of spatial dimensions.
  * @tparam Size The number of lattice vectors at each lattice node.
- * @tparam Scalar The floating-point type of lattice nodal values.
+ * @tparam Scalar The floating-point type of scalar values.
  */
 template <std::size_t Dimension, std::size_t Size, std::floating_point Scalar>
 auto operator-(
