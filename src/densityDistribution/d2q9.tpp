@@ -15,6 +15,8 @@
 /**
  * @brief Returns the lattice weights for the D2Q9 lattice model.
  *
+ * Returns the lattice weights for the D2Q9 lattice model as defined in \cite Kruger2017.
+ *
  * @param distribution A D2Q9 density distribution.
  * @return The D2Q9 lattice weights.
  *

@@ -27,6 +27,8 @@ DensityDistribution<Dimension, Size, Scalar>::DensityDistribution() : distributi
 /**
  * @brief Constructor for DensityDistribution with an initializer list.
  *
+ * Initializes the density distribution with the values in the initializer list.
+ *
  * @param distribution Initial values for the density distribution.
  *
  * @tparam Dimension The number of spatial dimensions.
@@ -169,7 +171,9 @@ auto DensityDistribution<Dimension, Size, Scalar>::cend() const
 }
 
 /**
- * @brief Returns the dimension of the density distribution, which is a compile-time constant.
+ * @brief Returns the dimension of the density distribution.
+ *
+ * Returns the dimension of the density distribution, which is a compile-time constant.
  *
  * @return The dimension of the density distribution.
  *
@@ -184,8 +188,9 @@ constexpr auto DensityDistribution<Dimension, Size, Scalar>::dimension() const -
 }
 
 /**
- * @brief Returns the number of elements in the density distribution, which is a compile-time
- * constant.
+ * @brief Returns the number of elements in the density distribution.
+ *
+ * Returns the number of elements in the density distribution, which is a compile-time constant.
  *
  * @return The number of elements in the density distribution.
  *
