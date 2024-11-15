@@ -88,18 +88,6 @@ TYPED_TEST(D2Q5Test, MomentumEqualsDistributionFirstMoment)
 
 TYPED_TEST(D2Q5Test, WeightsEqualLiteratureValues)
 {
-    // Reference:
-
-    //  @book{
-    //      author = {Krüger, Timm and Kusumaatmaja, Halim and Kuzmin, Alexandr and Shardt, Orest
-    //      and Silva, Goncalo and Viggen, Erlend Magnus},
-    //      title = {The Lattice Boltzmann Method},
-    //      year = {2017},
-    //      publisher = {Springer},
-    //      isbn = {978-3-319-83103-9},
-    //      doi = {10.1007/978-3-319-44649-3}
-    //  }
-
     // Given
 
     const TypeParam expectedWeightCenter{1.0 / 3.0};

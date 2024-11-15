@@ -15,6 +15,8 @@
 /**
  * @brief Returns the lattice weights for the D2Q5 lattice model.
  *
+ * Returns the lattice weights for the D2Q5 lattice model as defined in \cite Yoshida2010.
+ *
  * @param distribution A D2Q5 density distribution.
  * @return The D2Q5 lattice weights.
  *
