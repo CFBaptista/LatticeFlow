@@ -51,7 +51,9 @@ constexpr auto latticeWeights(const D2Q5<Scalar>& distribution) -> std::array<Sc
 template <std::floating_point Scalar>
 auto computeDensity(const D2Q5<Scalar>& distribution) -> Scalar
 {
-    const Scalar density{std::reduce(distribution.begin(), distribution.end())};
+    const Scalar density{
+        distribution[0] + distribution[1] + distribution[2] + distribution[3] + distribution[4]
+    };
     return density;
 }
 
