@@ -8,7 +8,7 @@ private:
     static constexpr std::size_t dimension_{2};
     static constexpr std::size_t size_{5};
     static constexpr std::initializer_list<Scalar> distribution_{
-        1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0, 4.0 / 6.0, 5.0 / 7.0
+        1.0 / 3.0, 2.0 / 4.0, 4.0 / 6.0, 3.0 / 5.0, 5.0 / 7.0
     };
 
 protected:

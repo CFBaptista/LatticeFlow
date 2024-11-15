@@ -29,12 +29,12 @@ constexpr auto latticeWeights(const D2Q5<Scalar>& distribution) -> std::array<Sc
 
     constexpr Scalar weightCenter{1.0 / 3.0};
     constexpr Scalar weightRight{1.0 / 6.0};
-    constexpr Scalar weightTop{1.0 / 6.0};
     constexpr Scalar weightLeft{1.0 / 6.0};
+    constexpr Scalar weightTop{1.0 / 6.0};
     constexpr Scalar weightBottom{1.0 / 6.0};
 
     constexpr std::array<Scalar, D2Q5_SIZE> weights{
-        weightCenter, weightRight, weightTop, weightLeft, weightBottom
+        weightCenter, weightRight, weightLeft, weightTop, weightBottom
     };
 
     return weights;
@@ -66,8 +66,8 @@ auto computeDensity(const D2Q5<Scalar>& distribution) -> Scalar
 template <std::floating_point Scalar>
 auto computeMomentum(const D2Q5<Scalar>& distribution) -> std::array<Scalar, D2Q5_DIMENSION>
 {
-    const Scalar momentumX = distribution[1] - distribution[3];
-    const Scalar momentumY = distribution[2] - distribution[4];
+    const Scalar momentumX = distribution[1] - distribution[2];
+    const Scalar momentumY = distribution[3] - distribution[4];
     const std::array<Scalar, D2Q5_DIMENSION> momentum{momentumX, momentumY};
 
     return momentum;
